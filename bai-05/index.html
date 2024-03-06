@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <!--  cách 1:(Inline) viết trc tiếp trong thẻ HTML -->
+  <!-- <button onclick="alert('Hello World!')">Click me</button> -->
+
+  <!-- cách 2:(Internal) viết trong file html  hiện tại -->
+  <button>
+    click me
+  </button>
+
+  <!-- <script>
+    var button = document.querySelector("button")
+    button.onclick = function(){
+      alert('Hello World!')
+    }
+  </script> -->
+ 
+  <!-- cách 3 : external: viết ra 1 file js khác rồi nhúng vào trang html -->
+  <script src="script.js"></script>
+  <script src="jv2.js"></script>
+
+</body>
+</html>

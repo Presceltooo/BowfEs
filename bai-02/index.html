@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <form
+    action="https://www.w3chools.com/action_page.php"
+    target="_blank"
+    method="post"
+    autocomplete="on"
+    novalidate
+  >
+  <!-- novalidate: k can ktra du lieu khi gui di -->
+    <label for="fullName">Họ tên:</label>
+    <br>
+    <input type="text" id="fullName" name="full_name">
+    <br>
+    <label for="email">Email:</label>
+    <br>
+    <input type="email" id="email" name="email">
+    <br>
+    <label for="colors">Chọn màu săc:</label>
+    <br>
+    <select name="color" id="colors">
+      <option value="yellow">Vàng</option>
+      <option value="red">Đỏ</option>
+      <option value="green">Xanh lá</option>
+      <option value="black" selected>Đen</option>
+    </select>
+    <br>
+    <label for="notes">Ghi chú:</label>
+    <br>
+    <textarea name="notes" id="notes" cols="30" rows="10"></textarea>
+    <br><br>
+    <input type="password">
+    <br>
+    <br>
+    <input type="submit" value="Gửi">
+  </form>
+
+  <form action="https://www.w3chools.com/action_page.php">
+    <br>
+    <label for="quantity"> Số lượng:</label>
+    <br>
+    <input type="number" id="quantity" name="soLuong">
+    <br><br>
+    <input type="submit">
+  </form>
+
+  <form action="https://www.w3chools.com/action_page.php">
+    <br>
+    <label for="date">Chọn ngày:</label>
+    <input type="date" name="ngay" id="date">
+    <br>
+    <label for="time">Chọn giờ:</label>
+    <input type="time" name="gio" id="time">
+    <br><br>
+    <input type="submit">
+  </form>
+
+  <form action="https://www.w3chools.com/action_page.php">
+    <br>
+    <label for="time">Chọn thời gian:</label>
+    <br>
+    <input type="datetime-local" id="time" name="thoiGian">
+    <br><br>
+    <input type="submit">
+  </form>
+
+  <form action="https://www.w3chools.com/action_page.php">
+    <br>
+    <label for="document">Tài liệu:</label>
+    <br>
+    <input type="file" id="document" name="taiLieu">
+    <br><br>
+    <input type="submit">
+  </form>
+
+  <form action="https://www.w3chools.com/action_page.php">
+    <p>Những ngôn ngữ lập trình bạn đã học:</p>
+    <input type="checkbox" id="ngonNguC" name="language" value="c">
+    <label for="ngonNguC">Ngôn ngữ C</label>
+    <br>
+    <input type="checkbox" id="ngonNgujave" name="language" value="java">
+    <label for="ngonNgujave">Ngôn ngữ Java</label>
+    <br>
+    <input type="checkbox" id="ngonNguPhp" name="language" value="php">
+    <label for="ngonNguPhp">Ngôn ngữ PHP</label>
+    <br><br>
+    <input type="submit" value="Gửi">
+  </form>
+
+  <form action="https://www.w3chools.com/action_page.php">
+    <p>Những ngôn ngữ lập trình bạn đã học:</p>
+    <input type="radio" id="ngonNguC2" name="language2" value="c">
+    <label for="ngonNguC2">Ngôn ngữ C</label>
+    <br>
+    <input type="radio" id="ngonNgujave2" name="language2" value="java">
+    <label for="ngonNgujave2">Ngôn ngữ Java</label>
+    <br>
+    <input type="radio" id="ngonNguPhp2" name="language2" value="php">
+    <label for="ngonNguPhp2">Ngôn ngữ PHP</label>
+    <br><br>
+    <input type="submit" value="Gửi">
+  </form>
+
+</body>
+</html>

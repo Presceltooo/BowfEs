@@ -1,0 +1,46 @@
+@import url('https://fonts.googleapis.com/css2?family=Protest+Revolution&display=swap');
+
+/* External CSS */
+/* * {
+  text-align: center;
+} 
+xét cho tất cả các phần tử */
+
+h1 {
+  color: #AFFF87;
+  background: #5177b4;
+  font-family: 'Protest Strike', sans-serif;
+  font-style: italic;
+  font-weight: 900; 
+  font-size: 100px;
+}
+
+h2 {
+  color: blue;
+  font-family: 'Protest Revolution', sans-serif;
+}
+
+#test-b {
+  color: #6D4AD5;
+  background: #3BC9CD;
+}
+
+/* #test-a {
+  color: green;
+}
+
+#test-c {
+  color: green;
+} */ 
+/* xét theo id */
+
+.color-green {
+  color: green;
+}
+/* xét theo class */
+
+h3, h4, h5 {
+  color: orange;
+}
+/* xét theo nhóm */
+
