@@ -218,20 +218,52 @@
 //   }
 //   console.log(b);
 
-// 9.2. kiểu let: là 1 biến cục bộ chỉ phạm bi ảnh hưởng trong 1 block code
-var a = 10;
-if(a == 10) {
-  let b = 20;
-  console.log(b);
-}
+// // 9.2. kiểu let: là 1 biến cục bộ chỉ phạm bi ảnh hưởng trong 1 block code
+// var a = 10;
+// if(a == 10) {
+//   let b = 20;
+//   console.log(b);
+// }
 
-if(true) {
-  let b = 30;
-  console.log(b);
-}
+// if(true) {
+//   let b = 30;
+//   console.log(b);
+// }
+// // 2 biến b là 2 biến khác nhau
+// console.log(b);
 
-console.log(b);
-  
+// // kiểu const: khai biến ra k thể gán lại giá trị khác cho biến và cũng giống như let cũng chỉ có phạm bi ảnh hưởng trong 1 block code
+// var a = 10;
+// if(a == 10) {
+//   const b = 20;
+//   b = 30; // error
+//   // muốn thay đổi ddc biến b buộc thay đổi const bằng let
+//   console.log(b);
+// }
 
+// console.log(b); // b is not defined
 
+// let a = 10;
+// if(true) {
+//   a = 20;
+//   console.log(a);
+//   // lúc này a biến a lại coi như là 1 biến toàn cục, bồ bộ chương trình là 1 block code
+// }
+// console.log(a);
+ 
 
+// var a = 1;
+// let b = 2;
+// if(true) {
+//   var a = 3;
+//   let b = 4;
+// }
+// console.log(a); // 3
+// console.log(b); // 2
+// var a = 3; là 1 biến toàn cục
+// let b = 4; là 1 biến cục bộ chỉ phạm bi ảnh hưởng trong 1 block code
+
+// khai báo k cần dùng từ khóa: nhưng cách này chỉ dùng cho việc gán biến
+// var a = 10;
+// a = 20; // nếu ta k dùng từ khó, tự hiểu là var
+// console.log(a);
