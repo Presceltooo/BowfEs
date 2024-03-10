@@ -4,7 +4,7 @@
 // }
 // var ketQua = tong(5, 6);
 // console.log(ketQua);
-// tuy nhiên nhược điểm là chỉ cộng đc 2 phần tử, nhưng nhu cầu mình là nhiều phần tử
+// tuy nhiên đây mới chỉ là cộng đc 2 phần tử, nhưng nhu cầu mình là nhiều phần tử
 
 //1.2. Declaration Function (Hàm định nghĩa)
 // có tính hoisting, đc gọi hàm trc khai báo hàm đó
