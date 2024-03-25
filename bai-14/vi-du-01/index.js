@@ -3,6 +3,12 @@ const express = require('express')
 const app = express()
 const port = 3000
 
+app.set('views', './views'); // tim den thu muc views de render ra html
+app.set('view engine', 'pug');
+
+app.use(express.static('public'))
+
+
 app.get('/', (req, res) => {
   // const listUser = [
   //   {
@@ -16,10 +22,11 @@ app.get('/', (req, res) => {
   // ];
   // console.log(listUser);
   // console.log("Okay");
-  res.send(`
-    h1>Trang chủ</h1>
-    <p> tôi là tùng </p>  
-  `);
+  res.render('index.pug', {
+    title: "Trang chủ",
+    message: "Xin chào mọi người"
+    // ngoài việc có những câu lệnh ở .pug thì ta có thể thêm 1 số nhưng data động ngay tại đây
+  }) // do da co chieu vao thu muc views nen k can ghi can than chi dan
 });
 
 app.get('/products', (req, res) => {
