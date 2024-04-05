@@ -86,7 +86,7 @@ console.log(s1);
 var inforUser = {
   fullName: "Đỗ Duy Tùng",
   age: 20,
-  phone: "0886466217"
+  phone: "0123456789"
 };
 console.log(inforUser);
 console.log(inforUser.fullName);
