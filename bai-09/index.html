@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+
+  <style>
+    .title {
+      color: green;
+    }
+    #menu li a {
+      color: red;
+    }
+    #menu li:nth-child(2) a{
+      color: orange
+    }
+    #menu-2 li a {
+      color: blue;
+    }
+    .test-01 {
+      color: rgb(134, 134, 108);
+    }
+    .test-02 {
+      color: pink;
+    }
+    .ads{
+      position: fixed;
+      bottom: 0;
+      right: 0;
+      display: none;
+    }
+    .ads-display{
+      display: block;
+    }
+  </style>
+
+<div id="ads-01" class="ads">
+  <a href="#" target="_blank">
+    <img src="image/image.png" alt="Quảng cáo 01" width="200px">
+  </a>
+</div>
+
+  <h2 id="h2-01" class="test-01">Nội dung <b>01</b></h2>
+  <h2 id="h2-02">Nội dung 02</h2>
+  <h2 id="h2-03" class="title" test="abc" idProduct="34853ybuy902374has">Nội dung 03</h2>
+
+  <h3 class="title">Nội dung thẻ h3</h3>
+  <h4 class="title">Nội dung thẻ h4</h4>
+
+  <ul id="menu">
+    <li>
+      <a href="#">Muc 01</a>
+    </li>
+    <li>
+      <a href="#">Muc 02</a>
+    </li>
+    <li>
+      <a href="#">Muc 03</a>
+    </li>
+  </ul>
+
+  <ul id="menu-2">
+    <li>
+      <a href="#">Muc 01</a>
+    </li>
+    <li>
+      <a href="#">Muc 02</a>
+    </li>
+    <li>
+      <a href="#">Muc 03</a>
+    </li>
+  </ul>
+
+  <script src="script.js"></script>
+</body>
+</html>
