@@ -64,12 +64,32 @@
 
 // Hoặc nếu bạn muốn lấy đổi lại cái thuộc tính thì dúng setAttribute
 
-const h2_01 = document.querySelector("#h2-01");
-h2_01.setAttribute("class", "test-02");
+// const h2_01 = document.querySelector("#h2-01");
+// h2_01.setAttribute("class", "test-02");
 
-setTimeout(() => {
-  ads1 = document.querySelector("#ads-01");
-  ads1.setAttribute("class", "ads ads-display");
-}, 4000);
+// setTimeout(() => {
+//   ads1 = document.querySelector("#ads-01");
+//   ads1.setAttribute("class", "ads ads-display");
+// }, 4000);
+// Dùng setAttribute là set lại hoàn toàn, nhưng nếu ta chỉ muốn thêm mà k muốn xóa đi cái cũ thì dùng classList.add
+// Nhưng classList chỉ dùng cho th tính class k dùng cho các thuộc tính tự định nghĩa.
+
+// setTimeout(() => {
+//   ads1 = document.querySelector("#ads-01");
+//   ads1.classList.add("ads-display");
+//   // Ngược lại nếu muốn xóa thay add bằng remove
+//   ads1.classList.remove("test1");
+// }, 4000);
+
+// 4. DOM CSS : để thay đổi CSS cho 1 element nào đó
+// Lưu ý cần viết dưới dạng camlCase: font-size >>> fontSize
+const h2_02 = document.getElementById("h2-02");
+// h2_02.style.fontSize = "30px";
+// h2_02.style.color = "red";
+// h2_02.style.backgroundColor = "green";
+
+// Trên thực tế cái này hơi mất công vì ta có thể setAttribute luôn và viết thêm code ở CSS luôn, dễ quản lý
+
+h2_02.setAttribute("class", "h2-02");
 
 

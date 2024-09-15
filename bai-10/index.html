@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <!-- 1.onload -->
+  <script>
+    // onload là đời trang load hết dữ liêu mới thực thi các câu lệnh trong onload
+
+    // window.onload = () => {
+    //   const listTagA = document.querySelectorAll("#menu li a");
+    //   console.log(listTagA);
+    // }
+  </script>
+
+
+  <!-- <ul id="menu">
+    <li>
+      <a href="#">Mục 01</a>
+    </li>
+    <li>
+      <a href="#">Mục 02</a>
+    </li>
+    <li>
+      <a href="#">Mục 03</a>
+    </li>
+  </ul> -->
+<!-- 1. End onload -->
+
+<!-- 1. onblur: là khi mát trọng tâm thì nó sẽ thực hiện bên trọng tâm vd như con trỏ chuột -->
+
+<input type="text" name="" id="input">
+
+<script>
+  const input = document.querySelector("#input");
+  input.onblur = () => {
+    input.value = input.value.toUpperCase();
+  }
+</script>
+
+
+</body>
+</html>
