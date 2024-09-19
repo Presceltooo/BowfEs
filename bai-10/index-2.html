@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+
+  <!-- onclick: kich hoat khi nhan vao phan tu -->
+  <!-- <style>
+    .d-none {
+      display: none;
+    }
+  </style>
+  
+  <div id="ads-01" class="ads test1">
+    <a href="#" target="_blank">
+      <img src="image/image.png" alt="Quảng cáo 01" width="200px">
+    </a>
+    <button id="close-ads">X</button>
+  </div>
+
+  <script>
+    const ads01 = document.querySelector("#ads-01");
+    const closeAds = document.querySelector("#close-ads");
+
+    closeAds.onclick = () => {
+      ads01.setAttribute("class", "d-none");
+    };
+
+    setTimeout(() => {
+      ads01.setAttribute("class", "d-none");
+    }, 30000);
+
+  </script> -->
+
+  <!-- onchange: kich hoat khi gia tri duoc thay doi so voi gia trc -->
+
+   <label for="color">Chọn màu bạn thích</label>
+   <select name="mauSac" id="color">
+     <option value="red">Màu đỏ</option>
+     <option value="green">Màu xanh</option>
+     <option value="blue">Màu xanh dương</option>
+   </select>
+
+    <script>
+      const selectColor = document.querySelector("#color");
+      selectColor.onchange = (event) => {
+        console.log(event.target.value);
+      };
+
+
+    </script>
+
+</body>
+</html>

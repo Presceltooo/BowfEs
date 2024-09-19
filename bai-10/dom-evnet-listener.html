@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  
+  <!-- DOM Events Listener: giống với Dom Event, nhưng khác ở 1 element có thể lắng nghe được nhiều sự kiện. có thể hủy bỏ lắng nghe 1 sự kiện bất kỳ (Dom event chỉ lằng nghe được chứ k thể hủy đc) -->
+  <button id="button">Click me</button>
+
+  <script>
+    const button = document.querySelector("#button");
+
+    const ham1 = () => {
+      console.log("Thực hiện công việc 1");
+    };
+
+    const ham2 = () => {
+      console.log("Thực hiện công việc 2");
+    };
+
+    button.onclick = () => {
+      ham1();
+    };
+
+    button.onclick = () => {
+      ham2();
+    };
+    // đã học đến phút 23
+
+  </script>
+
+
+</body>
+</html>
