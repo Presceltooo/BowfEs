@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  
+  <style>
+    .box:nth-child(2) {
+      color: red;
+    }
+  </style>
+
+  <div class="parent">
+    <div class="child-1" id="child1">
+      <div class="box">Box1</div>
+      <div class="box">Box2</div>
+      <div class="box">Box3</div>
+    </div>
+    <div class="child-2">child 2</div>
+    <div class="child-3">child 3</div>
+  </div>
+
+  <script>
+    const child1 = document.querySelector("#child1");
+    console.log(child1);
+    console.log(child1.parentNode);
+    console.log(child1.childNodes);
+    // childNodes: sẽ trẻ về 1 mảng mà phẩn từ trong đó bao gồm cả khoảng trắng và text(hay thẻ div)
+    console.log(child1.querySelectorAll(".box"));
+
+    console.log(child1.firstElementChild);
+    console.log(child1.lastElementChild);
+
+    // nth-child(2) là lấy ra thẻ div thứ 2
+    console.log(child1.querySelector(".box:nth-child(2)"));
+
+    // đã học đến phút 49
+
+  </script>
+
+
+</body>
+</html>
