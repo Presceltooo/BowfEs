@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  
+  <script>
+    // 4.1 document.createElement: tạo ra 1 thẻ html
+    // const div = document.createElement("div");
+
+    // div.innerHTML = `
+    //   <div id="ads-01" class="ads test1">
+    //     <button id="close-ads">X</button>
+    //     <a href="#" target="_blank">
+    //       <img src="image/image.png" alt="Quảng cáo 01" width="200px">
+    //     </a>  
+    //   </div>
+    // `;
+
+    // document.querySelector("body").appendChild(div);
+
+  </script>
+
+
+  <script>
+    // 4.2. document.createTextNode: tạo ra 1 text
+    const p = document.createElement("p");
+
+    // p.innerHTML = "Noi dung...";
+    const text = document.createTextNode("Noi dung...");
+    document.querySelector("body").appendChild(text);
+
+    // them vao vi tri cuoi cung cua 1 the HTML 1 cai gi do
+    document.querySelector("body").appendChild(p);
+
+  </script>
+
+
+  <ul id="menu">
+    <li><input type="text" value="Công việc 1"><button>X</button></li> 
+    <li><input type="text" value="Công việc 2"><button>X</button></li>
+    <li><input type="text" value="Công việc 3"><button>X</button></li>
+  </ul>
+
+  <button id="button">Add</button>
+
+  <!-- <script>
+
+    // 4.3. appendChild: thêm 1 thẻ vào 1 thẻ khác
+    const menu = document.querySelector("#menu");
+    const button = document.querySelector("#button");
+
+    // const li = document.createElement("li");
+    // li.innerHTML = "New Item";
+    // Luu y: khi tao 1 the khac nos chi dùng cho 1 lần, vì vậy ấn nút add k thêm được nhiều Item mới.
+    // => cần thêm vào sự kiện click
+
+    button.addEventListener("click", () => {
+      const li = document.createElement("li");
+      li.innerHTML = "New Item";
+      menu.appendChild(li);
+    });
+
+  </script> -->
+
+  <script>
+    // 4.4. insertBefore: thêm 1 thẻ vào 1 thẻ khác nhưng ở vị trí truoc no
+
+  //   let count = 1;
+  //   const menu = document.querySelector("#menu");
+  //   const button = document.querySelector("#button");
+
+  //   button.addEventListener("click", () => {
+  //     const liFirst = document.querySelector("li:nth-child(1)");
+  //     const li = document.createElement("li");
+
+  //     li.innerHTML = `
+  //       <buttonDelete>X<p>"New Item" + count</p></buttonDelete>
+  //     `;
+  //     // li.innerHTML = <button id="buttonItem">X</button>;
+
+  //     menu.insertBefore(li, liFirst);
+
+  //     count++;
+  //   });
+
+  // </script>
+
+
+  <script>
+    // 4.5. removeChild: xoa 1 thẻ con
+
+    // const menu = document.querySelector("#menu");
+    // const buttonsDelete = menu.querySelectorAll("button");
+    // // console.log(buttonsDelete);
+
+    // for (buttonDelete of buttonsDelete) {
+    //   // console.log(buttonDelete);
+    //   buttonDelete.addEventListener("click", (event) => {
+    //     menu.removeChild(event.target.parentNode);
+    //     // console.log(event.target.parentNode);
+    //   })
+      
+    // }
+  </script>
+
+
+  <Script>
+    // 4.6. replaceChild: thay thế 1 thẻ bằng 1 thẻ khác
+
+    const menu = document.querySelector("#menu");
+    const button = document.querySelector("#button");
+
+    button.addEventListener("click", () => {
+      const liSecond = document.querySelector("li:nth-child(2)");
+      const li = document.createElement("li");
+
+      li.innerHTML = "New Item";
+
+      menu.replaceChild(li, liSecond);
+
+    });
+
+  </Script>
+
+</body>
+</html>
