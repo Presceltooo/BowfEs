@@ -83,24 +83,50 @@
   // 3.1
     // console.log(this); // window
   // 3.2: 
-  const button = document.querySelector("#button");
+  // const button = document.querySelector("#button");
 
-  button.addEventListener("click", function() {
-    console.log(this); // button
-  });
+  // button.addEventListener("click", function() {
+  //   console.log(this); // button
+  // });
 
   // 3.3: this trong object
-  var infoUser = {
-    name: "Do Duy Tung",
-    age: 21,
-    email: "abcd@gmail.com",
-    phone: "0123456789",
-    showInfo: function() {
-      console.log(this);
-      console.log(this.phone);
-    }
-  };
-  infoUser.showInfo();
-  // đã hoàn thành đến phút 39
+  // var infoUser = {
+  //   name: "Duy Tung",
+  //   age: 21,
+  //   email: "abcd@gmail.com",
+  //   phone: "0123456789",
+  //   showInfo: function() {
+  //     console.log(this);
+  //     console.log(this.phone);
+  //   },
+  //   getFullName: function() {
+  //     console.log(this.name);
+  //   },
+  //   cccd : {
+  //     name: "Do Duy Tung",
+  //     getFullName: function() {
+  //       console.log(this.name);
+  //     }
+  //   }
+  // };
+
+  // // infoUser.showInfo();
+  // // infoUser.getFullName();
+  // infoUser.cccd.getFullName();
+
+  // 3.4. This trong Arrow function
+  // Không tồn tại đối tượng this
+  // nếu dùng thì nó trả ra this của window
+
+  const button = document.querySelector("#button");
+
+  button.addEventListener("click", () => {
+    // console.log(this); // trả ra this của window
+    console.log(button); // vì vậy ta có thể thây bằng việc dùng luôn biến buttonthay vì this
+  });
+
+// 4. Module: giống tính chất đóng gói trong OOP (tái sử dụng code 1 cách hiệu quả)
+
+
 
 
