@@ -127,22 +127,77 @@ import { tinhTong } from "./helpers/tinhTong.js";
   
   // Tu do ta thay: setTimeout no chay bat dong bo
 
-  // 4. fetchAPI
+  // 3. fetchAPI
+
   // fetchAPI la phuong thuc ma de fortend co the giao tiep voi backend de lay du lieu
 
   // dau tien ta can biet ban chat cua fetch chinh la 1 promise
-  fetch("https://dummyjson.com/product")
-    .then(response => response.json())
+  // fetch("https://dummyjson.com/products")
+  //   .then(response => response.json())
 
-    // ban chat ham o day la arrow function, nhung duoc viet tat: (response) => {return response.json()}, dấu "{}", return cũng như vậy hoàn toàn có thể bỏ đi / return để trả ra cái gì để thằng dau có thể dùng cái đó
-    // neu chi co 1 đối số thì kh cần "()" và ở trong fetch có hàm .json() cũng giống như .parse: tác dụng cũng chỉ chuyển từ json sang JS.
+  //   // ban chat ham o day la arrow function, nhung duoc viet tat: (response) => {return response.json()}, dấu "{}", return cũng như vậy hoàn toàn có thể bỏ đi / return để trả ra cái gì để thằng dau có thể dùng cái đó
+  //   // neu chi co 1 đối số thì kh cần "()" và ở trong fetch có hàm .json() cũng giống như .parse: tác dụng cũng chỉ chuyển từ json sang JS.
 
-    .then(data => {
-      console.log(data.products);
+  //   .then(data => {
+  //     console.log(data.products);
 
-    // ta thấy rằng bh có 1 arrray 30 phần tử, gio ta chi muon lay ten san pham thoi chang han thì ta se dung map
+  //   // ta thấy rằng bh có 1 arrray 30 phần tử, gio ta chi muon lay ten san pham thoi chang han thì ta se dung map
 
-    const newArray = data.products.map((item) => {
+  //   const newArray = data.products.map((item) => {
+  //     return `
+  //       <div class="product-item">
+  //       <img src="${item.thumbnail}" />
+  //       <h2>
+  //       ${item.title}
+  //       </h2>
+  //       <div>${item.price}$</div>
+  //       </div>
+  //     `;
+  //     // cần dùng `` để viết html
+  //   })
+  //   console.log(newArray);
+
+  //   // giờ ta muốn hiện thị ra dánh sách sản phẩm vs thẻ li
+  //   // trước tiên ta can convert array sang string qua hàm join
+
+  //   const htmls = newArray.join("");
+
+  //   console.log(htmls);
+  //   // rồi giờ hiện thị
+  //   const productList = document.querySelector("#product-list");
+  //   productList.innerHTML = htmls;
+
+
+  //   })
+    
+
+
+  // 4. Async / Await
+  // lí do để có Async/Await là vì hà bình thưởng nó hoạt động 1 cách bất động bộ, bên trong nó lại bất đồnh bộ nhưng thứ ta cần là đồng bộ để có thể làm việt một cách mạch lạc (như Promise vì nó có tính chờ qua .then)
+
+  // để biến hàm thông thường thành hàm Promise thì ta sẽ dùng Async/ await
+
+  const fetchApi = async (api) => {
+    const response = await fetch(api);
+    // console.log(response);
+    const data = await response.json();
+    // console.log(data);
+    return data;
+  };
+
+// fetchApi("https://dummyjson.com/products")
+//   .then((data) => {
+//     console.log(data);
+//   })
+
+
+// 5. JSON server và Postman
+// 5.1. JSON server: là 1 server để fake API và trả về chối JSON
+
+fetchApi("http://localhost:3000/products")
+  .then((data) => {
+    console.log(data);
+    const newArray = data.map((item) => {
       return `
         <div class="product-item">
         <img src="${item.thumbnail}" />
@@ -152,24 +207,30 @@ import { tinhTong } from "./helpers/tinhTong.js";
         <div>${item.price}$</div>
         </div>
       `;
-      // cần dùng `` để viết html
     })
     console.log(newArray);
-
-    // giờ ta muốn hiện thị ra dánh sách sản phẩm vs thẻ li
-    // trước tiên ta can convert array sang string qua hàm join
 
     const htmls = newArray.join("");
 
     console.log(htmls);
-    // rồi giờ hiện thị
+
     const productList = document.querySelector("#product-list");
     productList.innerHTML = htmls;
-
-
     })
-    
 
+    // hướng dẫn:
+    // 1. npm init: tạo ra 1 file package.json
+    // 2. npm i json-server: cài đặt json-server
+    // 3. data.json: tạo ra 1 file data.json
+    // 4. ở mục script của file package.json thêm "start": "json-server --watch data.json"
+    // 5. npm start: chạy server
 
+  // 5.2. Postman: mục đích test API
+  // PT GET: để lấy dữ liệu, cái mà BE dùng để test API
+  // PT POST: để bảo bản ghi mới
+  // PT PUT: để cập nhật bản ghi
+  // nhược điểm của phương thức PUT phải nhập đầy đủ Key-Value, kể cái Key-Value k cần thay đổi (k nhập đủ sẽ dẫn đến mất data)
+  // PT PATCH: để cập nhật 1 phần của bản ghi cũng giống vs PUT nhưng k cần nhập Key-Value của những cái không cần thay đổi.
+  // PT DELETE: để xóa bản ghi
 
 
