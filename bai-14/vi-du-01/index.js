@@ -6,8 +6,11 @@ const port = 3000
 
 app.set('views', './views'); // tim den thu muc views de render ra html
 app.set('view engine', 'pug');
+// để biết template engine là pug
+// pug: để tách HTML thành các đoạn nhỏ , dễ tái sd
 
 app.use(express.static('public'))
+// nhúng file tĩnh ra ngoài để người dùng có thể truy cập
 
 
 app.get('/', (req, res) => {
@@ -53,7 +56,10 @@ app.get('/contact', (req, res) => {
 
 app.listen(port, () => {
   /// như thông báo khi chạy server
-  console.log(`Example app listening on port ${port}`)
+  console.log(`Example app listening on port ${port} - http://localhost:3000/`)
 });
 
-// đã học đc 1h8p
+
+
+
+
