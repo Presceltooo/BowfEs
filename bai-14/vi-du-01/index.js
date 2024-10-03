@@ -54,6 +54,8 @@ app.get('/contact', (req, res) => {
   res.send("<h1>Trang liên hệ</h1>");
 });
 
+// 4. PUG
+
 app.listen(port, () => {
   /// như thông báo khi chạy server
   console.log(`Example app listening on port ${port} - http://localhost:3000/`)
