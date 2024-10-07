@@ -31,7 +31,7 @@ app.get('/', (req, res) => {
 
 // Template engine: là công cụ để tách các mã HTML từ đó có thể tái sử dụng các đoạn HTML đó.
 
-  res.render('index.pug', {
+  res.render('index', {
     title: "Trang chủ",
     message: "Xin chào mọi người"
     // ngoài việc có những câu lệnh ở .pug thì ta có thể thêm 1 số nhưng data động ngay tại đây
@@ -51,7 +51,10 @@ app.get('/blog', (req, res) => {
 });
 
 app.get('/contact', (req, res) => {
-  res.send("<h1>Trang liên hệ</h1>");
+  res.render('contact', {
+    title: "Trang liên hệ",
+    message: "Xin chào mọi người"
+});
 });
 
 // 4. PUG
