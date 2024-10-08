@@ -1,7 +1,15 @@
 const express = require('express')
-// md để gọi thử viện express
-const app = express()
-// app có nghĩa là toàn bộ chương trình của ta
+const mongoose = require('mongoose');
+mongoose.connect('mongodb://127.0.0.1:27017/products-test-t9-2024');
+
+const Product = mongoose.model('Product', { 
+  title: String,
+  description: String,
+  price: Number,
+  thumbnail: String 
+});
+
+const app = express() // app: toàn bộ chương trình
 const port = 3000
 
 app.set('views', './views'); // tim den thu muc views de render ra html
@@ -32,7 +40,7 @@ app.get('/', (req, res) => {
 // Template engine: là công cụ để tách các mã HTML từ đó có thể tái sử dụng các đoạn HTML đó.
 
   res.render('index', {
-    title: "Trang chủ",
+    titlePage: "Trang chủ",
     message: "Xin chào mọi người"
     // ngoài việc có những câu lệnh ở .pug thì ta có thể thêm 1 số nhưng data động ngay tại đây
   }) // do da co chieu vao thu muc views nen k can ghi can than chi dan
@@ -42,8 +50,14 @@ app.get('/', (req, res) => {
 // SPA: Single Page Application: là chỉ load 1 phần của của trang, sử dụng qua API => giảm tốc độ 
 
 
-app.get('/products', (req, res) => {
-  res.send("<h1>Trang sản phẩm</h1>");
+app.get('/products', async (req, res) => {
+  const products = await Product.find({}); // dùng await thì cần phải dùng async trc hàm đó
+  console.log(products);
+  res.render('products', {
+    // tác dụng như truyền biến để dùng
+    titlePage: "Danh sách sản phẩm",
+    products: products
+});
 });
 
 app.get('/blog', (req, res) => {
@@ -52,7 +66,7 @@ app.get('/blog', (req, res) => {
 
 app.get('/contact', (req, res) => {
   res.render('contact', {
-    title: "Trang liên hệ",
+    titlePage: "Trang liên hệ",
     message: "Xin chào mọi người"
 });
 });
