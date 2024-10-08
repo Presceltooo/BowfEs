@@ -1,4 +1,14 @@
 extends layouts/default.pug
+include mixins/box-head.pug
 
 block main
-  h1 Trang chủ
+  //- h1 Trang chủ
+
+  // mixins: gần giống như include, khác ở chỗ nó là 1 khối (block), là sự giao thao của include và function(tức có thể truyền vào tham số)
+
+  //- div(class="box-head")
+  //-   h1(class="inner-title") Trang chủ
+  //-   div(class="inner-desc") Đây là đoạn mô tả của Trang chủ
+
+  // sử dụng mixins
+  +box-head("Trang chủ", "Đây là đoan mô tả của Trang chủ")
