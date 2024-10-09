@@ -4,10 +4,10 @@
 const express = require('express');
 const router = express.Router();
 
+const controller = require("../../controllers/client/product.controller");
+
 // "/" vì trang products giờ sẽ là trang chủ của các trang nhỏ hơn trong products
-router.get('/', (req, res) => {
-  res.render("client/pages/products/index");
-});
+router.get('/', controller.index);
 
 
 module.exports = router;
