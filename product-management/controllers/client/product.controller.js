@@ -6,6 +6,7 @@ module.exports.index = async (req, res) => {
     deleted: false
   });
 
+  // map() sẽ tạo ra 1 mảng mới từ mảng cũ và có tướng tác với từng phần tử trong mảng cũ
   const newProducts = products.map((item) => {
     item.newPrice = (item.price * (1-item.discountPercentage/100)).toFixed(2);
     return item;
