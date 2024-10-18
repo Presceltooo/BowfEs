@@ -36,4 +36,4 @@ if (formSearch) {
     window.location.href = url.href;
   })
 }
-// End Form-Search  
+// End FormSearch  
