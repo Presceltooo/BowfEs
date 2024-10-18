@@ -22,7 +22,7 @@ const formSearch = document.querySelector("#form-search");
 
 if (formSearch) {
   let url = new URL(window.location.href);
-  
+
   formSearch.addEventListener("submit", (e) => {
     e.preventDefault();
 
@@ -36,4 +36,4 @@ if (formSearch) {
     window.location.href = url.href;
   })
 }
-// End Form Search
+// End Form-Search  
