@@ -15,7 +15,6 @@ block main
 
         .col-6
           +search(keyword)
-          //- đã học đến phut 56
 
   .card.mb-3 
     .card-header Bộ lọc và Tìm kiếm 
@@ -44,11 +43,33 @@ block main
                 td #{item.price}$
                 td
                   if (item.status == "active")
-                      a(href="#" class="badge badge-success") Hoạt động 
+                      a(
+                        href="javascript:;"
+                        data-status=item.status
+                        data-id=item.id
+                        button-change-status
+                        class="badge badge-success" 
+                      ) Hoạt động 
                   else 
-                      a(href="#" class="badge badge-danger") Dừng hoạt động
+                      a(
+                        href="javascript:;"
+                        data-status=item.status
+                        data-id=item.id
+                        button-change-status
+                        class="badge badge-danger"  
+                      ) Dừng hoạt động
                 td 
                   button(class="btn btn-warning btn-sm") Sửa
                   button(class="btn btn-danger btn-sm lm-1") Xóa
 
   +pagination(pagination)
+
+  //có 2 cách để gửi dữ liệu lên server: form hoặc API
+  form(
+    action=""
+    method="POST"
+    id="form-change-status"
+    data-path=`${prefixAdmin}/products/change-status`
+  )
+
+  script(src="/admin/js/product.js")
