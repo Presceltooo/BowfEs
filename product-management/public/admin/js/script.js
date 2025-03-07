@@ -106,8 +106,6 @@ if (formChangeMulti) {
 
       inputIds.value = ids.join(", "); // chuyển thành string thay vì mảng
       formChangeMulti.submit();
-      // dùng join để chuyển thành string thay vì mảng
-      
 
     } else {
       alert("Vui lòng chọn ít nhất 1 sản phẩm!");
