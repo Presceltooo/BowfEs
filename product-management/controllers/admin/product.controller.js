@@ -24,14 +24,13 @@ module.exports.index = async (req, res) => {
 
   // Pagination
   const countProducts = await Product.countDocuments(find);
-  let objectPagination = paginationHelper(
-    {
-    currentPage: 1,
-    limitItems:4
+  let objectPagination = paginationHelper({
+      currentPage: 1,
+      limitItems: 4
     },
     req.query,
     countProducts
-);
+  );
 
   // End Pagination
 
@@ -44,14 +43,18 @@ module.exports.index = async (req, res) => {
     keyword: objectSearch.keyword,
     pagination: objectPagination
   });
-} 
+}
 
 // [PATCH] /admin/products/change-status/:change-status/:id
 module.exports.changeStatus = async (req, res) => {
   const status = req.params.status;
   const id = req.params.id;
 
-  await Product.updateOne({ _id: id }, { status: status });
+  await Product.updateOne({
+    _id: id
+  }, {
+    status: status
+  });
 
   res.redirect('back');
 }
@@ -65,10 +68,22 @@ module.exports.changeMulti = async (req, res) => {
 
   switch (type) {
     case "active":
-      await Product.updateMany({ _id: { $in: ids } }, { status: "active"});
+      await Product.updateMany({
+        _id: {
+          $in: ids
+        }
+      }, {
+        status: "active"
+      });
       break;
     case "inactive":
-      await Product.updateMany({ _id: { $in: ids } }, { status: "inactive"});
+      await Product.updateMany({
+        _id: {
+          $in: ids
+        }
+      }, {
+        status: "inactive"
+      });
       break;
     default:
       break;
@@ -76,6 +91,15 @@ module.exports.changeMulti = async (req, res) => {
 
   console.log(type);
   console.log(ids);
+
+  res.redirect('back');
+}
+
+// [DELETE] /admin/products/delete/:id
+module.exports.deleteItem = async (req, res) => {
+  const id = req.params.id;
+
+  await Product.deleteOne({_id: id});
 
   res.redirect('back');
 }
