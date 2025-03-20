@@ -73,13 +73,20 @@ block main
                         button-change-status
                         class="badge badge-danger"  
                       ) Dừng hoạt động
-                td 
-                  button(class="btn btn-warning btn-sm") Sửa
-                  button(
-                    class="btn btn-danger btn-sm lm-1"
-                    button-delete
-                    data-id = item.id
-                    ) Xóa
+                td
+                  if (item.deletedAt == null)
+                    button(class="btn btn-warning btn-sm") Sửa
+                    button(
+                      class="btn btn-danger btn-sm ml-1"
+                      button-delete
+                      data-id = item.id
+                      ) Xóa
+                  else
+                    button(
+                      class="btn btn-success btn-sm ml-1"
+                      button-restore
+                      data-id = item.id
+                    ) Khôi phục
 
   +pagination(pagination)
 
@@ -99,5 +106,12 @@ block main
     data-path=`${prefixAdmin}/products/delete`
   )
 
+
+  form(
+    action=""
+    method="POST"
+    id="form-restore-item"
+    data-path=`${prefixAdmin}/products/restore`
+  )
 
   script(src="/admin/js/product.js")

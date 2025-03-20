@@ -8,7 +8,12 @@ module.exports.index = async (req, res) => {
   filterStatus = filterStatusHelper(req.query);
 
   let find = {
-    deleted: false
+    $or:[
+      {deleted: false},
+      {deletedAt: {$ne: null}}
+    ]
+    // deleted: false,
+    // deletedAt:
   };
 
   if (req.query.status) {
@@ -102,7 +107,22 @@ module.exports.deleteItem = async (req, res) => {
   // await Product.deleteOne({_id: id});
   await Product.updateOne({_id: id}, {
     deleted: true,
+    status: "inactive",
     deletedAt: Date.now()
+  });
+
+  res.redirect('back');
+}
+
+// [PATCH] /admin/products/restore/:id
+module.exports.restoreItem = async (req, res) => {
+  const id = req.params.id;
+
+  // await Product.deleteOne({_id: id});
+  await Product.updateOne({_id: id}, {
+    deleted: false,
+    status: "active",
+    deletedAt: null
   });
 
   res.redirect('back');
