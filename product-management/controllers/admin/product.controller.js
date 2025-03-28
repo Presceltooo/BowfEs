@@ -8,17 +8,7 @@ module.exports.index = async (req, res) => {
   filterStatus = filterStatusHelper(req.query);
 
   let find = {
-    $or: [{
-        deleted: false
-      },
-      {
-        deletedAt: {
-          $ne: null
-        }
-      }
-    ]
-    // deleted: false,
-    // deletedAt:
+    $or: [{deleted: false},{deletedAt: {$ne: null}}]
   };
 
   if (req.query.status) {
@@ -68,14 +58,13 @@ module.exports.changeStatus = async (req, res) => {
   }, {
     status: status
   });
+  req.flash('success', 'Cập nhật trạng thái sản phẩm thành công!');
 
   res.redirect('back');
 }
 
 // [PATCH] /admin/products/change-multi
 module.exports.changeMulti = async (req, res) => {
-  console.log(req.body);
-
   const type = req.body.type;
   const ids = req.body.ids.split(", "); // chuyển thành mảng
 
@@ -88,6 +77,7 @@ module.exports.changeMulti = async (req, res) => {
       }, {
         status: "active"
       });
+      req.flash('success', `Cập nhật trạng thái thành công ${ids.length} sản phẩm!`);
       break;
     case "inactive":
       await Product.updateMany({
@@ -97,6 +87,7 @@ module.exports.changeMulti = async (req, res) => {
       }, {
         status: "inactive"
       });
+      req.flash('success', `Dừng hoạt động thành công ${ids.length} sản phẩm!`);
       break;
     case "delete-all":
       await Product.updateMany({
@@ -108,6 +99,7 @@ module.exports.changeMulti = async (req, res) => {
         status: "inactive",
         deletedAt: Date.now()
       });
+      req.flash('success', `Xóa thành công ${ids.length} sản phẩm!`);
       break;
     case "restore-all":
       await Product.updateMany({
@@ -119,6 +111,7 @@ module.exports.changeMulti = async (req, res) => {
         status: "active",
         deletedAt: null
       });
+      req.flash('success', `Khôi phục thành công ${ids.length} sản phẩm!`);
       break;
     case "change-position":
       for (const item of ids) {
@@ -131,13 +124,11 @@ module.exports.changeMulti = async (req, res) => {
           position: position
         });
       }
+      req.flash('success', `Cập nhật thành công vị trí ${ids.length} sản phẩm!`);
       break;
     default:
       break;
   }
-
-  console.log(type);
-  console.log(ids);
 
   res.redirect('back');
 }
@@ -154,6 +145,7 @@ module.exports.deleteItem = async (req, res) => {
     status: "inactive",
     deletedAt: Date.now()
   });
+  req.flash('success', `Xóa thành công sản phẩm!`);
 
   res.redirect('back');
 }
@@ -170,6 +162,7 @@ module.exports.restoreItem = async (req, res) => {
     status: "active",
     deletedAt: null
   });
+  req.flash('success', `Khôi phục thành công sản phẩm!`);
 
   res.redirect('back');
 }
