@@ -99,6 +99,16 @@ module.exports.changeMulti = async (req, res) => {
         status: "inactive",
         deletedAt: Date.now()
       });
+      case "restore-all":
+      await Product.updateMany({
+        _id: {
+          $in: ids
+        }
+      }, {
+        deleted: false,
+        status: "active",
+        deletedAt: null
+      });
       break;
     default:
       break;

@@ -85,7 +85,7 @@ if (checkboxMulti) {
     });
   });
 }
-// End Checkbox Multib
+// End Checkbox Multi
 
 // Form Change Multi
 const formChangeMulti = document.querySelector("[form-change-multi]");
@@ -103,6 +103,12 @@ if (formChangeMulti) {
       if (!isConfirm) {
         return;
       }
+    } else if (typeChange == "restore-all") {
+      const isConfirm = confirm("Bạn chắc chắn muốn khôi phục những sản phẩm này chứ?");
+      if(!isConfirm) {
+        return;
+      }
+
     }
 
     if (inputsChecked.length > 0) {
