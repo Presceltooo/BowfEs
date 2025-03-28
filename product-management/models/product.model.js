@@ -18,6 +18,5 @@ const productSchema = new mongoose.Schema({
 
 const Product = mongoose.model('Product', productSchema, "products");
 // Model là 1 bản ghi: gồm tên model, schema và tên collection
-// học đến 1h40p
 
 module.exports = Product;
