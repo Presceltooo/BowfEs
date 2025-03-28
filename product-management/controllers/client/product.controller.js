@@ -4,7 +4,7 @@ module.exports.index = async (req, res) => {
   const products = await Product.find({
     status: "active",
     deleted: false
-  });
+  }).sort({ position: "asc"});
 
   // map() sẽ tạo ra 1 mảng mới từ mảng cũ và có tướng tác với từng phần tử trong mảng cũ
   const newProducts = products.map((item) => {

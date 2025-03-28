@@ -8,9 +8,14 @@ module.exports.index = async (req, res) => {
   filterStatus = filterStatusHelper(req.query);
 
   let find = {
-    $or:[
-      {deleted: false},
-      {deletedAt: {$ne: null}}
+    $or: [{
+        deleted: false
+      },
+      {
+        deletedAt: {
+          $ne: null
+        }
+      }
     ]
     // deleted: false,
     // deletedAt:
@@ -39,10 +44,13 @@ module.exports.index = async (req, res) => {
 
   // End Pagination
 
-  const products = await Product.find(find).limit(objectPagination.limitItems).skip(objectPagination.skip);
+  const products = await Product.find(find)
+    .sort({ position: "asc" })
+    .limit(objectPagination.limitItems)
+    .skip(objectPagination.skip);
 
   res.render("admin/pages/products/index", {
-    pageTitle: "Trang danh sách sản phẩm",
+    pageTitle: "Trang danh sách sản phẩm", 
     products: products,
     filterStatus: filterStatus,
     keyword: objectSearch.keyword,
@@ -89,7 +97,8 @@ module.exports.changeMulti = async (req, res) => {
       }, {
         status: "inactive"
       });
-      case "delete-all":
+      break;
+    case "delete-all":
       await Product.updateMany({
         _id: {
           $in: ids
@@ -99,7 +108,8 @@ module.exports.changeMulti = async (req, res) => {
         status: "inactive",
         deletedAt: Date.now()
       });
-      case "restore-all":
+      break;
+    case "restore-all":
       await Product.updateMany({
         _id: {
           $in: ids
@@ -109,6 +119,18 @@ module.exports.changeMulti = async (req, res) => {
         status: "active",
         deletedAt: null
       });
+      break;
+    case "change-position":
+      for (const item of ids) {
+        let [id, position] = item.split("-");
+        position = parseInt(position);
+
+        await Product.updateOne({
+          _id: id
+        }, {
+          position: position
+        });
+      }
       break;
     default:
       break;
@@ -125,7 +147,9 @@ module.exports.deleteItem = async (req, res) => {
   const id = req.params.id;
 
   // await Product.deleteOne({_id: id});
-  await Product.updateOne({_id: id}, {
+  await Product.updateOne({
+    _id: id
+  }, {
     deleted: true,
     status: "inactive",
     deletedAt: Date.now()
@@ -139,7 +163,9 @@ module.exports.restoreItem = async (req, res) => {
   const id = req.params.id;
 
   // await Product.deleteOne({_id: id});
-  await Product.updateOne({_id: id}, {
+  await Product.updateOne({
+    _id: id
+  }, {
     deleted: false,
     status: "active",
     deletedAt: null
