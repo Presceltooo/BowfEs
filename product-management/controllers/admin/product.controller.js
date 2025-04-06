@@ -2,13 +2,20 @@ const Product = require("../../models/product.model");
 const filterStatusHelper = require("../../helpers/filterStatus");
 const searchHelper = require("../../helpers/search");
 const paginationHelper = require("../../helpers/pagination");
+const SystemConfig = require("../../config/system.js");
 
 // [GET] /admin/products
 module.exports.index = async (req, res) => {
   filterStatus = filterStatusHelper(req.query);
 
   let find = {
-    $or: [{deleted: false},{deletedAt: {$ne: null}}]
+    $or: [{
+      deleted: false
+    }, {
+      deletedAt: {
+        $ne: null
+      }
+    }]
   };
 
   if (req.query.status) {
@@ -35,12 +42,14 @@ module.exports.index = async (req, res) => {
   // End Pagination
 
   const products = await Product.find(find)
-    .sort({ position: "asc" })
+    .sort({
+      position: "asc"
+    })
     .limit(objectPagination.limitItems)
     .skip(objectPagination.skip);
 
   res.render("admin/pages/products/index", {
-    pageTitle: "Trang danh sách sản phẩm", 
+    pageTitle: "Trang danh sách sản phẩm",
     products: products,
     filterStatus: filterStatus,
     keyword: objectSearch.keyword,
@@ -166,3 +175,29 @@ module.exports.restoreItem = async (req, res) => {
 
   res.redirect('back');
 }
+
+// [GET] /admin/products
+module.exports.create = async (req, res) => {
+  res.render("admin/pages/products/create", {
+    pageTitle: "Thêm mới sản phẩm",
+  });
+}
+
+// [POST] /admin/products
+module.exports.createPost = async (req, res) => {
+  req.body.price = parseInt(req.body.price);
+  req.body.discountPercentage = parseInt(req.body.discountPercentage);
+  req.body.stock = parseInt(req.body.stock);
+
+  if (req.body.position == NaN || req.body.position == '') {
+    const countProducts = await Product.countDocuments();
+    req.body.position = countProducts + 1;
+  } else {
+    req.body.position = parseInt(req.body.position);
+  }
+
+  const product = new Product(req.body);
+  await product.save();
+
+  res.redirect(`${SystemConfig.preFixAdmin}/products`);
+};
