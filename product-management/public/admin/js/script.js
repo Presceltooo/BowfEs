@@ -152,3 +152,28 @@ if (showAlert) {
   });
 }
 // End Show Alert 
+
+// Uploads image
+const uploadImage = document.querySelector("[upload-image]");
+if (uploadImage) {
+  const uploadImageInput = document.querySelector("[upload-image-input]");
+  const uploadImagePreview = document.querySelector("[upload-image-preview]");
+  const closePreview = document.querySelector("[close-preview]");
+
+  uploadImageInput.addEventListener("change", async (e) => {
+    const file = e.target.files[0]; // phá vỡ cấu trúc
+
+    if (file) {
+      uploadImagePreview.src = URL.createObjectURL(file);
+
+      closePreview.style.display = "block";
+    }
+  });
+
+  closePreview.addEventListener("click", () => {
+    uploadImageInput.value = "";
+    uploadImagePreview.src = "";
+  });
+
+}
+// End Uploads image
