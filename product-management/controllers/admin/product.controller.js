@@ -176,16 +176,15 @@ module.exports.restoreItem = async (req, res) => {
   res.redirect('back');
 }
 
-// [GET] /admin/products
+// [GET] /admin/products/create
 module.exports.create = async (req, res) => {
   res.render("admin/pages/products/create", {
     pageTitle: "Thêm mới sản phẩm",
   });
 }
 
-// [POST] /admin/products
+// [POST] /admin/products/create
 module.exports.createPost = async (req, res) => {
-  console.log(req.file);
   req.body.price = parseInt(req.body.price);
   req.body.discountPercentage = parseInt(req.body.discountPercentage);
   req.body.stock = parseInt(req.body.stock);
@@ -197,7 +196,9 @@ module.exports.createPost = async (req, res) => {
     req.body.position = parseInt(req.body.position);
   }
 
-  req.body.thumbnail = `/uploads/${req.file.filename}`;
+  if (req.file) {
+    req.body.thumbnail = `/uploads/${req.file.filename}`;
+  }
 
   const product = new Product(req.body);
   await product.save();

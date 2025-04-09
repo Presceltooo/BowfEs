@@ -8,6 +8,9 @@ const upload = multer({
 
 const controller = require("../../controllers/admin/product.controller");
 
+const validate = require("../../validates/admin/product.validate");
+
+
 router.get('/', controller.index);
 
 router.patch('/change-status/:status/:id', controller.changeStatus);
@@ -21,6 +24,10 @@ router.patch('/restore/:id', controller.restoreItem);
 
 router.get('/create', controller.create);
 
-router.post('/create', upload.single("thumbnail"), controller.createPost); // "thumbnail" là tên trường sẽ ddcc lưu
+router.post(
+  '/create', 
+  upload.single("thumbnail"), 
+  validate.createPost,
+  controller.createPost); // "thumbnail" là tên trường sẽ đc lưu
 
 module.exports = router;
