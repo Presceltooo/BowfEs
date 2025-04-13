@@ -1,39 +1,24 @@
-name: Sync to bowfes-ecom
+name: Sync Repo
 
 on:
   push:
     branches:
-      - main
+      - main  # Nếu bạn dùng nhánh khác, sửa lại ở đây
 
 jobs:
   sync:
     runs-on: ubuntu-latest
-
     steps:
-      - name: Checkout source repo (BowfEs)
+      - name: Clone source repo
         uses: actions/checkout@v3
 
-      - name: Configure Git
+      - name: Push to target repo
         run: |
-          git config --global user.name "GitHub Actions"
-          git config --global user.email "actions@github.com"
+          git config --global user.name "D.T.C"
+          git config --global user.email "a01672034597@gmail.com"
 
-      - name: Verify Token Permissions
-        env:
-          TOKEN: ${{ secrets.BOWFES_ECOM }}
-        run: |
-          echo "Verifying token permissions..."
-          curl -H "Authorization: token ${TOKEN}" https://api.github.com/user/repos
+          # Thêm remote target dùng secret chứa token
+          git remote add target https://${{ secrets.BOWFES_ECOM }}@github.com/Presceltooo/bowfes-ecom.git
 
-      - name: Debug URL
-        env:
-          TOKEN: ${{ secrets.BOWFES_ECOM }}
-        run: |
-          echo "Using remote: https://x-access-token:${TOKEN}@github.com/Presceltooo/bowfes-ecom.git"
-
-      - name: Push to bowfes-ecom
-        env:
-          TOKEN: ${{ secrets.BOWFES_ECOM }}
-        run: |
-          git remote add target https://x-access-token:${TOKEN}@github.com/Presceltooo/bowfes-ecom.git
-          git push --force target HEAD:main
+          # Đẩy code lên repo target
+          git push --force target main
