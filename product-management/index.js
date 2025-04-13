@@ -34,8 +34,6 @@ app.use(session({cookie: {maxAge: 60000}}));
 app.use(flash());
 // End Flash
 
-console.log(__dirname);
-
 // App local Variables
 app.locals.prefixAdmin = systemConfig.preFixAdmin;
 
