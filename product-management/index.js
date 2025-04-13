@@ -25,7 +25,7 @@ app.use(bodyParser.urlencoded({
   extended: false
 }));
 
-app.set('views', './views');
+app.set('views', `${__dirname}/views`);
 app.set('view engine', 'pug');
 
 // Flash
@@ -34,10 +34,12 @@ app.use(session({cookie: {maxAge: 60000}}));
 app.use(flash());
 // End Flash
 
+console.log(__dirname);
+
 // App local Variables
 app.locals.prefixAdmin = systemConfig.preFixAdmin;
 
-app.use(express.static('public'));
+app.use(express.static(`${__dirname}/public`));
 
 // routes
 routeAdmin(app);

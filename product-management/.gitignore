@@ -25,4 +25,5 @@ yarn-debug.log*
 yarn-error.log*
 
 # folder
-/public/uploads/
+uploads/*
+!uploads/.gitkeep
