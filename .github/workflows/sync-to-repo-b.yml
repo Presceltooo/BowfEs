@@ -23,4 +23,4 @@ jobs:
         TOKEN: ${{ secrets.BOWFES_ECOM }}
       run: |
         git remote add target https://x-access-token:${TOKEN}@github.com/Presceltooo/bowfes-ecom.git
-        git push --force --mirror target
+        git push --force target HEAD:main
