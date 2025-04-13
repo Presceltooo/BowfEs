@@ -3,7 +3,7 @@ name: Sync Repo
 on:
   push:
     branches:
-      - main  # Nếu bạn dùng nhánh khác, sửa lại ở đây
+      - main
 
 jobs:
   sync:
