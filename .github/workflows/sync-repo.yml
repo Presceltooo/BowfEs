@@ -3,7 +3,7 @@ name: Sync product-management to bowfes-ecom
 on:
   push:
     paths:
-      - 'product-management/**'   # Kích hoạt khi có thay đổi trong thư mục này
+      - 'product-management/**'   # Trigger khi có thay đổi trong thư mục này
   workflow_dispatch:
 
 jobs:
@@ -11,20 +11,18 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout full source repo (BowfEs)
+      - name: Checkout source repo
         uses: actions/checkout@v3
         with:
-          fetch-depth: 0  # Quan trọng để lấy đủ lịch sử cho subtree
+          fetch-depth: 0  # Quan trọng! Phải fetch toàn bộ lịch sử để subtree hoạt động
 
-      - name: Push subtree (product-management) to bowfes-ecom
+      - name: Create subtree branch
+        run: |
+          git subtree split --prefix=product-management -b split-branch
+
+      - name: Push to bowfes-ecom
         env:
           TOKEN: ${{ secrets.BOWFES_ECOM }}
         run: |
-          git config --global user.name "GitHub Actions"
-          git config --global user.email "actions@github.com"
-
-          # Tạo branch từ subtree
-          git subtree split --prefix=product-management -b sync-branch
-
-          # Push subtree branch lên repo đích
-          git push --force https://x-access-token:${TOKEN}@github.com/Presceltooo/bowfes-ecom.git sync-branch:main
+          git remote add target https://x-access-token:${TOKEN}@github.com/Presceltooo/bowfes-ecom.git
+          git push --force target split-branch:main
