@@ -18,6 +18,12 @@ jobs:
         git config --global user.name "GitHub Actions"
         git config --global user.email "actions@github.com"
 
+    - name: Debug remote URL
+      run: echo "Remote: https://x-access-token:${TOKEN}@github.com/Presceltooo/bowfes-ecom.git"
+      env:
+        TOKEN: ${{ secrets.BOWFES_ECOM }}
+
+
     - name: Push to bowfes-ecom
       env:
         TOKEN: ${{ secrets.BOWFES_ECOM }}
