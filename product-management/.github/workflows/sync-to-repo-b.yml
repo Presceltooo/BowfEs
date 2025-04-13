@@ -1,0 +1,26 @@
+name: Sync to bowfes-ecom
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout source repo (BowfEs)
+      uses: actions/checkout@v3
+
+    - name: Configure Git
+      run: |
+        git config --global user.name "GitHub Actions"
+        git config --global user.email "actions@github.com"
+
+    - name: Mirror push to bowfes-ecom
+      env:
+        TOKEN: ${{ secrets.BOWFES_ECOM }}
+      run: |
+        git remote add target https://x-access-token:${TOKEN}@github.com/Presceltooo/bowfes-ecom.git
+        git push --force --mirror target

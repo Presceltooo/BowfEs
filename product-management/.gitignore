@@ -27,6 +27,3 @@ yarn-error.log*
 # folder
 uploads/*
 !uploads/.gitkeep
-
-# Github workflow
-.github/workflows/
