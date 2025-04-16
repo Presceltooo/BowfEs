@@ -22,12 +22,13 @@ module.exports.index = async (req, res) => {
     find.status = req.query.status;
   };
 
-  // đoạn search
+  // Search
   const objectSearch = searchHelper(req.query);
 
   if (objectSearch.regex) {
     find.title = objectSearch.regex;
   }
+  // End Search
 
   // Pagination
   const countProducts = await Product.countDocuments(find);
