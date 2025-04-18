@@ -11,7 +11,6 @@ const productCategorySchema = new mongoose.Schema({
     default: ""
   },
   description: String,
-  category: String,
   thumbnail: String,
   slug: {
     type: String,
