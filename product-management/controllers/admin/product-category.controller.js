@@ -228,17 +228,32 @@ module.exports.createPost = async (req, res) => {
 
 // [GET] /admin/products-category/edit/:id
 module.exports.edit = async (req, res) => {
+  find = {
+    $or: [{
+      deleted: false
+    }, {
+      deletedAt: {
+        $ne: null
+      }
+    }]
+  };
+
   try {
-    const find = {
+    const findone = {
       deleted: false,
       _id: req.params.id
     }
 
-    const records = await ProductCategory.findOne(find);
+    const data = await ProductCategory.findOne(findone);
+
+    const records = await ProductCategory.find(find);
+
+    const newRecords = createTreeHelper.tree(records);
 
     res.render("admin/pages/products-category/edit", {
-      pageTitle: "Chỉnh sửa danh mục",
-      records: records
+      pageTitle: "Chỉnh sửa danh mục sản phẩm",
+      data: data,
+      records: newRecords
     });
   } catch (error) {
     res.redirect(`${SystemConfig.preFixAdmin}/products-category`);
@@ -266,17 +281,32 @@ module.exports.editPatch = async (req, res) => {
 
 // [GET] /admin/products-category/detail/:id
 module.exports.detail = async (req, res) => {
+  find = {
+    $or: [{
+      deleted: false
+    }, {
+      deletedAt: {
+        $ne: null
+      }
+    }]
+  };
+
   try {
-    const find = {
+    const findone = {
       deleted: false,
       _id: req.params.id
     }
 
-    const records = await ProductCategory.findOne(find);
+    const data = await ProductCategory.findOne(findone);
+
+    const records = await ProductCategory.find(find);
+
+    const newRecords = createTreeHelper.tree(records);
 
     res.render("admin/pages/products-category/detail", {
-      pageTitle: records.title,
-      records: records
+      pageTitle: data.title,
+      data: data,
+      records: newRecords
     });
   } catch (error) {
     res.redirect(`${SystemConfig.preFixAdmin}/products-category`);
