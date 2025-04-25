@@ -5,6 +5,13 @@ block main
   if (product.title)
     h1(class="mb-4") #{product.title}
 
+  if (product.product_category_id == '')
+    h1(class="mb-4") Danh mục: #{product.title}
+  else if (category.length > 0)
+    each record in category
+      if (record.id == product.product_category_id)
+        h1(class="mb-4") Danh mục: #{record.title}
+
   if (product.price)
     div(class="mb-4") Giá: <b>#{product.price}$</b>
 
