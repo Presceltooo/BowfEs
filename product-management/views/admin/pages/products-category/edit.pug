@@ -32,7 +32,7 @@ block main
         class="form-control"
       )
         option(value="") -- Chọn danh mục cha --
-        if (data)
+        if (records)
           +select-tree(records, 1, data.parent_id)
 
     div(class="form-group")

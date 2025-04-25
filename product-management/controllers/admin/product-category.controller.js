@@ -228,16 +228,6 @@ module.exports.createPost = async (req, res) => {
 
 // [GET] /admin/products-category/edit/:id
 module.exports.edit = async (req, res) => {
-  find = {
-    $or: [{
-      deleted: false
-    }, {
-      deletedAt: {
-        $ne: null
-      }
-    }]
-  };
-
   try {
     const findone = {
       deleted: false,
@@ -245,6 +235,16 @@ module.exports.edit = async (req, res) => {
     }
 
     const data = await ProductCategory.findOne(findone);
+
+    find = {
+      $or: [{
+        deleted: false
+      }, {
+        deletedAt: {
+          $ne: null
+        }
+      }]
+    };
 
     const records = await ProductCategory.find(find);
 
@@ -281,16 +281,6 @@ module.exports.editPatch = async (req, res) => {
 
 // [GET] /admin/products-category/detail/:id
 module.exports.detail = async (req, res) => {
-  find = {
-    $or: [{
-      deleted: false
-    }, {
-      deletedAt: {
-        $ne: null
-      }
-    }]
-  };
-
   try {
     const findone = {
       deleted: false,
@@ -298,6 +288,16 @@ module.exports.detail = async (req, res) => {
     }
 
     const data = await ProductCategory.findOne(findone);
+
+    find = {
+      $or: [{
+        deleted: false
+      }, {
+        deletedAt: {
+          $ne: null
+        }
+      }]
+    };
 
     const records = await ProductCategory.find(find);
 
