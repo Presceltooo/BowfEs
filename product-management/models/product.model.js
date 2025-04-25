@@ -6,6 +6,10 @@ mongoose.plugin(slug);
 // Schema như là 1 khung
 const productSchema = new mongoose.Schema({
   title: String,
+  product_category_id: {
+    type: String,
+    default: ""
+  },
   description: String,
   category: String,
   price: Number,
