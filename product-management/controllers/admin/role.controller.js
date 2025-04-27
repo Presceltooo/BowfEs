@@ -22,6 +22,38 @@ module.exports.index = async (req, res) => {
   });
 }
 
+// [DELETE] /admin/roles/delete/:id
+module.exports.deleteItem = async (req, res) => {
+  const id = req.params.id;
+
+  // await Role.deleteOne({_id: id});
+  await Role.updateOne({
+    _id: id
+  }, {
+    deleted: true,
+    deletedAt: Date.now()
+  });
+  req.flash('success', `Xóa thành công nhóm quyền!`);
+
+  res.redirect('back');
+}
+
+// [PATCH] /admin/roles/restore/:id
+module.exports.restoreItem = async (req, res) => {
+  const id = req.params.id;
+
+  // await Product.deleteOne({_id: id});
+  await Role.updateOne({
+    _id: id
+  }, {
+    deleted: false,
+    deletedAt: null
+  });
+  req.flash('success', `Khôi phục thành công nhóm quyền!`);
+
+  res.redirect('back');
+}
+
 // [GET] /admin/roles/create
 module.exports.create = async (req, res) => {
   res.render("admin/pages/roles/create", {

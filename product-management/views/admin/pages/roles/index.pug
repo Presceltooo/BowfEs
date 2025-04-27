@@ -1,6 +1,9 @@
 extends ../../layouts/default.pug
+include ../../mixins/alert.pug
 
 block main
+  +alert-success(5000)
+
   h1(class="mb-4") Nhóm quyền
 
   .card.mb-3 
@@ -55,4 +58,21 @@ block main
           else 
             tr 
               td(colspan="4" class="") Chưa có nhóm quyền nào được tạo
+  
+  form(
+    action=""
+    method="POST"
+    id="form-delete-item"
+    data-path=`${prefixAdmin}/roles/delete`
+  )
+
+
+  form(
+    action=""
+    method="POST"
+    id="form-restore-item"
+    data-path=`${prefixAdmin}/roles/restore`
+  )
+
+  script(src="/admin/js/role.js")
                
