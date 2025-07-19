@@ -5,9 +5,14 @@ const SystemConfig = require("../../config/system.js");
 
 // [GET] /admin/auth/login
 module.exports.login = async (req, res) => {
-  res.render("admin/pages/auth/login", {
-    pageTitle: "Trang đăng nhập"
-  });
+  const user = await Account.findOne({ token: req.cookies.token, deleted: false });
+  if (req.cookies.token == user.token) {
+    res.redirect(`${SystemConfig.preFixAdmin}/dashboard`);
+  } else {
+    res.render("admin/pages/auth/login", {
+      pageTitle: "Trang đăng nhập"
+    });
+  }
 }
 
 // [POST] /admin/auth/login
