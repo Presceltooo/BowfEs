@@ -60,11 +60,12 @@ mixin table-tree(items, level = 1)
               data-id = item.id
               ) Xóa
         else
-          button(
-            class="btn btn-success btn-sm"
-            button-restore
-            data-id = item.id
-          ) Khôi phục
+          if (role.permissions.includes("products-category_delete"))
+            button(
+              class="btn btn-success btn-sm"
+              button-restore
+              data-id = item.id
+            ) Khôi phục
 
       if item.children && item.children.length > 0
         +table-tree(item.children, level + 1)

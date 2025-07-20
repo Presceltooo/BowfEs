@@ -14,10 +14,11 @@ module.exports.index = async (req, res) => {
   let find = {
     $or: [{
       deleted: false
-    }, {
-      deletedAt: {
-        $ne: null
-      }
+    }, { 
+      // Lưu ý dùng deletedBy.deletedAt / deletedBy: {deletedAt}
+      'deletedBy.deletedAt': {
+          $ne: null
+        }
     }]
   };
 
@@ -60,6 +61,8 @@ module.exports.index = async (req, res) => {
     .sort(sort)
     .limit(objectPagination.limitItems)
     .skip(objectPagination.skip);
+
+  console.log(products);
 
   for (const product of products) {
     const user = await Account.findOne({
@@ -129,7 +132,10 @@ module.exports.changeMulti = async (req, res) => {
       }, {
         deleted: true,
         status: "inactive",
-        deletedAt: Date.now()
+        deletedBy: {
+          account_id: res.locals.user.id,
+          deletedAt: Date.now()
+        }
       });
       req.flash('success', `Xóa thành công ${ids.length} sản phẩm!`);
       break;
@@ -140,8 +146,11 @@ module.exports.changeMulti = async (req, res) => {
         }
       }, {
         deleted: false,
-        status: "active",
-        deletedAt: null
+        status: "active", 
+        deletedBy: {
+          account_id: null,
+          deletedAt: null
+        }
       });
       req.flash('success', `Khôi phục thành công ${ids.length} sản phẩm!`);
       break;
@@ -175,7 +184,10 @@ module.exports.deleteItem = async (req, res) => {
   }, {
     deleted: true,
     status: "inactive",
-    deletedAt: Date.now()
+    deletedBy: {
+      account_id: res.locals.user.id,
+      deletedAt: Date.now()
+    }
   });
   req.flash('success', `Xóa thành công sản phẩm!`);
 
@@ -192,7 +204,10 @@ module.exports.restoreItem = async (req, res) => {
   }, {
     deleted: false,
     status: "active",
-    deletedAt: null
+    deletedBy: {
+      account_id: null,
+      deletedAt: null
+    }
   });
   req.flash('success', `Khôi phục thành công sản phẩm!`);
 
@@ -207,9 +222,9 @@ module.exports.create = async (req, res) => {
     $or: [{
       deleted: false
     }, {
-      deletedAt: {
-        $ne: null
-      }
+      'deletedBy.deletedAt': {
+          $ne: null
+        }
     }]
   }; 
   
@@ -260,9 +275,9 @@ module.exports.edit = async (req, res) => {
       $or: [{
         deleted: false
       }, {
-        deletedAt: {
-          $ne: null
-        }
+        'deletedBy.deletedAt': {
+            $ne: null
+          }
       }]
     };
 
@@ -315,7 +330,7 @@ module.exports.detail = async (req, res) => {
       $or: [{
         deleted: false
       }, {
-        deletedAt: {
+        'deletedBy.deletedAt': {
           $ne: null
         }
       }]
