@@ -72,7 +72,7 @@ module.exports.index = async (req, res) => {
       product.accountFullName = user.fullName
     }
 
-    // Lấy ra thông tin của người cập nhật sản phẩm gần nhất``
+    // Lấy ra thông tin của người cập nhật sản phẩm gần nhất
     const updatedBy = product.updatedBy.slice(-1)[0];
     
     if (updatedBy) {
@@ -83,8 +83,6 @@ module.exports.index = async (req, res) => {
       updatedBy.accountFullName = userUpdated.fullName;
     }
   }
-
-
 
   res.render("admin/pages/products/index", {
     pageTitle: "Trang danh sách sản phẩm",

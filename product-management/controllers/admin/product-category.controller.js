@@ -1,4 +1,5 @@
 const ProductCategory = require("../../models/product-category.model");
+const Account = require("../../models/account.model");
 const filterStatusHelper = require("../../helpers/filterStatus");
 const searchHelper = require("../../helpers/search");
 const paginationHelper = require("../../helpers/pagination");
@@ -61,6 +62,19 @@ module.exports.index = async (req, res) => {
 
   const newRecords = createTreeHelper.tree(records);
 
+  for (const record of records) {
+    // Lấy ra thông tin của người cập nhật sản phẩm gần nhất
+    const updatedBy = record.updatedBy.slice(-1)[0];
+
+    if (updatedBy) {
+      const userUpdated = await Account.findOne({
+        _id: updatedBy.account_id
+      })
+
+      updatedBy.accountFullName = userUpdated.fullName;
+    }
+  }
+
   res.render("admin/pages/products-category/index", {
     pageTitle: "Danh mục sản phẩm",
     records: newRecords,
@@ -75,10 +89,16 @@ module.exports.changeStatus = async (req, res) => {
   const status = req.params.status;
   const id = req.params.id;
 
+  const updatedBy = {
+    account_id: res.locals.user.id,
+    updatedAt: Date.now()
+  };
+
   await ProductCategory.updateOne({
     _id: id
   }, {
-    status: status
+    status: status,
+    $push: { updatedBy: updatedBy }
   });
   req.flash('success', 'Cập nhật trạng thái danh mục thành công!');
 
@@ -88,7 +108,12 @@ module.exports.changeStatus = async (req, res) => {
 // [PATCH] /admin/products-category/change-multi
 module.exports.changeMulti = async (req, res) => {
   const type = req.body.type;
-  const ids = req.body.ids.split(", "); // chuyển thành mảng
+  const ids = req.body.ids.split(", "); // chuyển thành 
+  
+  const updatedBy = {
+    account_id: res.locals.user.id,
+    updatedAt: Date.now()
+  };
 
   switch (type) {
     case "active":
@@ -97,7 +122,8 @@ module.exports.changeMulti = async (req, res) => {
           $in: ids
         }
       }, {
-        status: "active"
+        status: "active",
+        $push: { updatedBy: updatedBy }
       });
       req.flash('success', `Cập nhật trạng thái thành công ${ids.length} danh mục!`);
       break;
@@ -107,7 +133,8 @@ module.exports.changeMulti = async (req, res) => {
           $in: ids
         }
       }, {
-        status: "inactive"
+        status: "inactive",
+        $push: { updatedBy: updatedBy }
       });
       req.flash('success', `Dừng hoạt động thành công ${ids.length} danh mục!`);
       break;
@@ -143,7 +170,8 @@ module.exports.changeMulti = async (req, res) => {
         await ProductCategory.updateOne({
           _id: id
         }, {
-          position: position
+          position: position,
+          $push: { updatedBy: updatedBy }
         });
       }
       req.flash('success', `Cập nhật thành công vị trí ${ids.length} danh mục!`);
@@ -268,9 +296,17 @@ module.exports.editPatch = async (req, res) => {
   req.body.position = parseInt(req.body.position);
 
   try {
+    const updatedBy = {
+      account_id: res.locals.user.id,
+      updatedAt: Date.now()
+    };
+
     await ProductCategory.updateOne({
       _id: id
-    }, req.body);
+    }, {
+      ...req.body,
+      $push: { updatedBy: updatedBy }
+    });
     req.flash('success', 'Cập nhật danh mục thành công!');
   } catch (error) {
     req.flash('error', 'Cập nhật danh mục thất bại!');

@@ -1,4 +1,5 @@
 const Role = require("../../models/role.model")
+const Account = require("../../models/account.model");
 const SystemConfig = require("../../config/system.js");
 
 
@@ -15,6 +16,21 @@ module.exports.index = async (req, res) => {
   };
 
   const records = await Role.find(find);
+
+
+  for (const record of records) {
+    // Lấy ra thông tin của người cập nhật sản phẩm gần nhất
+    const updatedBy = record.updatedBy.slice(-1)[0];
+
+    if (updatedBy) {
+      const userUpdated = await Account.findOne({
+        _id: updatedBy.account_id
+      })
+
+      updatedBy.accountFullName = userUpdated.fullName;
+    }
+  }
+  
 
   res.render("admin/pages/roles/index", {
     pageTitle: "Nhóm quyền",
@@ -94,9 +110,17 @@ module.exports.editPatch = async (req, res) => {
   const id = req.params.id;
 
   try {
+    const updatedBy = {
+      account_id: res.locals.user.id,
+      updatedAt: Date.now()
+    };
+
     await Role.updateOne({
       _id: id
-    }, req.body);
+    }, {
+      ...req.body,
+      $push: { updatedBy: updatedBy }
+    });
     req.flash('success', 'Cập nhật phân quyền thành công!');
   } catch (error) {
     req.flash('error', 'Cập nhật phân quyền thất bại!');
