@@ -8,6 +8,7 @@ const productCategoryRoutes = require("./product-category.route");
 const roleRoutes = require("./role.route");
 const accountRoutes = require("./account.route")
 const authRoutes = require("./auth.route")
+const articleCategoryRoutes = require("./article-category.route")
 
 
 module.exports = (app) => {
@@ -24,4 +25,6 @@ module.exports = (app) => {
   app.use(PATCH_ADMIN + '/accounts', authMiddleware.requireAuth, accountRoutes);
 
   app.use(PATCH_ADMIN + '/auth', authRoutes);
+
+  app.use(PATCH_ADMIN + '/articles-category', authMiddleware.requireAuth, articleCategoryRoutes);
 }

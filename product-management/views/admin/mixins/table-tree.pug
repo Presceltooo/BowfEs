@@ -25,7 +25,7 @@ mixin table-tree(items, level = 1)
           name="position"
         )
       td
-        if (role.permissions.includes("products-category_edit"))
+        if (role.permissions.includes("products-category_edit") || role.permissions.includes("articles-category_edit"))
           if (item.status == "active")
               a(
                 href="javascript:;"
@@ -51,22 +51,22 @@ mixin table-tree(items, level = 1)
       td
         if (item.deletedAt == null)
           a(
-            href=`${prefixAdmin}/products-category/detail/${item.id}`
+            href= (path == "products-category") ? `${prefixAdmin}/products-category/detail/${item.id}` : `${prefixAdmin}/articles-category/detail/${item.id}`
             class="btn btn-secondary btn-sm"
             ) Chi tiết
-          if (role.permissions.includes("products-category_edit"))
+          if (role.permissions.includes("products-category_edit") || role.permissions.includes("articles-category_edit"))
             a(
-              href=`${prefixAdmin}/products-category/edit/${item.id}`
+              href=(path == "products-category") ? `${prefixAdmin}/products-category/edit/${item.id}` : `${prefixAdmin}/articles-category/edit/${item.id}`
               class="btn btn-warning btn-sm ml-1"
               ) Sửa
-          if (role.permissions.includes("products-category_delete"))
+          if (role.permissions.includes("products-category_delete") || role.permissions.includes("articles-category_delete"))
             button(
               class="btn btn-danger btn-sm ml-1"
               button-delete
               data-id = item.id
               ) Xóa
         else
-          if (role.permissions.includes("products-category_delete"))
+          if (role.permissions.includes("products-category_delete") || role.permissions.includes("articles-category_delete"))
             button(
               class="btn btn-success btn-sm"
               button-restore
