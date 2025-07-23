@@ -35,6 +35,7 @@ const productSchema = new mongoose.Schema({
   },
   position: Number,
   status: String,
+  featured: String,
   deletedBy: {
     account_id: String,
     deletedAt: Date
