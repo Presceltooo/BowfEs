@@ -40,34 +40,48 @@ module.exports.index = async (req, res) => {
 
 // [DELETE] /admin/roles/delete/:id
 module.exports.deleteItem = async (req, res) => {
-  const id = req.params.id;
+  const permissions = res.locals.user.permissions;
 
-  // await Role.deleteOne({_id: id});
-  await Role.updateOne({
-    _id: id
-  }, {
-    deleted: true,
-    deletedAt: Date.now()
-  });
-  req.flash('success', `Xóa thành công nhóm quyền!`);
+  if (permissions.includes("roles_delete")) {
+    const id = req.params.id;
 
-  res.redirect('back');
+    // await Role.deleteOne({_id: id});
+    await Role.updateOne({
+      _id: id
+    }, {
+      deleted: true,
+      deletedAt: Date.now()
+    });
+    req.flash('success', `Xóa thành công nhóm quyền!`);
+
+    res.redirect('back');
+  } else {
+    res.send("403");
+    return;
+  }
 }
 
 // [PATCH] /admin/roles/restore/:id
 module.exports.restoreItem = async (req, res) => {
-  const id = req.params.id;
+  const permissions = res.locals.user.permissions;
 
-  // await Product.deleteOne({_id: id});
-  await Role.updateOne({
-    _id: id
-  }, {
-    deleted: false,
-    deletedAt: null
-  });
-  req.flash('success', `Khôi phục thành công nhóm quyền!`);
+  if (permissions.includes("roles_delete")) {
+    const id = req.params.id;
 
-  res.redirect('back');
+    // await Product.deleteOne({_id: id});
+    await Role.updateOne({
+      _id: id
+    }, {
+      deleted: false,
+      deletedAt: null
+    });
+    req.flash('success', `Khôi phục thành công nhóm quyền!`);
+
+    res.redirect('back');
+  } else {
+    res.send("403");
+    return;
+  }
 }
 
 // [GET] /admin/roles/create
@@ -79,11 +93,18 @@ module.exports.create = async (req, res) => {
 
 // [POST] /admin/roles/create
 module.exports.createPost = async (req, res) => {
-  const record = new Role(req.body);
+  const permissions = res.locals.user.permissions;
 
-  await record.save();
+  if (permissions.includes("roles_create")) {
+    const record = new Role(req.body);
 
-  res.redirect(`${SystemConfig.preFixAdmin}/roles`);
+    await record.save();
+
+    res.redirect(`${SystemConfig.preFixAdmin}/roles`);
+  } else {
+    res.send("403");
+    return;
+  }
 }
 
 // [GET] /admin/roles/edit/:id
@@ -107,26 +128,33 @@ module.exports.edit = async (req, res) => {
 
 // [PATCH] /admin/roles/edit/:id
 module.exports.editPatch = async (req, res) => {
-  const id = req.params.id;
+  const permissions = res.locals.user.permissions;
 
-  try {
-    const updatedBy = {
-      account_id: res.locals.user.id,
-      updatedAt: Date.now()
-    };
+  if (permissions.includes("roles_edit")) {
+    const id = req.params.id;
 
-    await Role.updateOne({
-      _id: id
-    }, {
-      ...req.body,
+    try {
+      const updatedBy = {
+        account_id: res.locals.user.id,
+        updatedAt: Date.now()
+      };
+
+      await Role.updateOne({
+        _id: id
+      }, {
+        ...req.body,
       $push: { updatedBy: updatedBy }
-    });
-    req.flash('success', 'Cập nhật phân quyền thành công!');
-  } catch (error) {
-    req.flash('error', 'Cập nhật phân quyền thất bại!');
-  }
+      });
+      req.flash('success', 'Cập nhật phân quyền thành công!');
+    } catch (error) {
+      req.flash('error', 'Cập nhật phân quyền thất bại!');
+    }
 
-  res.redirect("back");
+    res.redirect("back");
+  } else {
+    res.send("403");
+    return;
+  }
 }
 
 // [GET] /admin/roles/detail/:id
@@ -165,20 +193,27 @@ module.exports.permissions = async (req, res) => {
 
 // [PATCH] /admin/roles/permissions
 module.exports.permissionsPatch = async (req, res) => {
-  const permissions = JSON.parse(req.body.permissions);
-  
-  try {
-    for (const item of permissions) {
-      await Role.updateOne({
-        _id: item.id
-      }, {
-        permissions: item.permissions
-      });
-    }
-    req.flash('success', "Cập nhật phân quyền thành công!");
-  } catch (error) {
-    req.flash('error', "Cập nhật phân quyền thất bại!");
-  }
+  const subPermissions = res.locals.user.permissions;
 
-  res.redirect("back");
+  if (subPermissions.includes("roles_permissions")) {
+    const permissions = JSON.parse(req.body.permissions);
+
+    try {
+      for (const item of permissions) {
+        await Role.updateOne({
+          _id: item.id
+        }, {
+          permissions: item.permissions
+        });
+      }
+      req.flash('success', "Cập nhật phân quyền thành công!");
+    } catch (error) {
+      req.flash('error', "Cập nhật phân quyền thất bại!");
+    }
+
+    res.redirect("back");
+  } else {
+    res.send("403");
+    return;
+  }
 }
