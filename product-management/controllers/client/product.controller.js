@@ -12,7 +12,6 @@ module.exports.index = async (req, res) => {
     item.newPrice = (item.price * (1-item.discountPercentage/100)).toFixed(2);
     return item;
   });
-  console.log(newProducts);
 
   res.render("client/pages/products/index", {
     pageTitle: "Trang danh sách sản phẩm",
