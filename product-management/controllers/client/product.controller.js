@@ -1,5 +1,7 @@
 const Product = require("../../models/product.model");
 
+const productHelper = require("../../helpers/product");
+
 // [GET] /products
 module.exports.index = async (req, res) => {
   const products = await Product.find({
@@ -8,10 +10,7 @@ module.exports.index = async (req, res) => {
   }).sort({ position: "desc"});
 
   // map() sẽ tạo ra 1 mảng mới từ mảng cũ và có tướng tác với từng phần tử trong mảng cũ
-  const newProducts = products.map((item) => {
-    item.newPrice = (item.price * (1-item.discountPercentage/100)).toFixed(2);
-    return item;
-  });
+  const newProducts = productHelper.priceNewProduct(products);
 
   res.render("client/pages/products/index", {
     pageTitle: "Trang danh sách sản phẩm",
