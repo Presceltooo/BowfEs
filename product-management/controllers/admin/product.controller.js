@@ -95,7 +95,7 @@ module.exports.index = async (req, res) => {
 
 // [PATCH] /admin/products/change-status/:change-status/:id
 module.exports.changeStatus = async (req, res) => {
-  const permissions = res.locals.user.permissions;
+  const permissions = res.locals.role.permissions;
 
   if (permissions.includes("products_edit")) {
     const status = req.params.status;
@@ -123,7 +123,7 @@ module.exports.changeStatus = async (req, res) => {
 
 // [PATCH] /admin/products/change-multi
 module.exports.changeMulti = async (req, res) => {
-  const permissions = res.locals.user.permissions;
+  const permissions = res.locals.role.permissions;
 
   if (permissions.includes("products_edit")) {
     const type = req.body.type;
@@ -214,7 +214,7 @@ module.exports.changeMulti = async (req, res) => {
 
 // [DELETE] /admin/products/delete/:id
 module.exports.deleteItem = async (req, res) => {
-  const permissions = res.locals.user.permissions;
+  const permissions = res.locals.role.permissions;
 
   if (permissions.includes("products_delete")) {
     const id = req.params.id;
@@ -241,7 +241,7 @@ module.exports.deleteItem = async (req, res) => {
 
 // [PATCH] /admin/products/restore/:id
 module.exports.restoreItem = async (req, res) => {
-  const permissions = res.locals.user.permissions;
+  const permissions = res.locals.role.permissions;
 
   if (permissions.includes("products_delete")) {
     const id = req.params.id;
@@ -268,8 +268,6 @@ module.exports.restoreItem = async (req, res) => {
 
 // [GET] /admin/products/create
 module.exports.create = async (req, res) => {
-  console.log(res.locals.user);
-
   find = {
     $or: [{
       deleted: false
@@ -292,7 +290,7 @@ module.exports.create = async (req, res) => {
 
 // [POST] /admin/products/create
 module.exports.createPost = async (req, res) => {
-  const permissions = res.locals.user.permissions;
+  const permissions = res.locals.role.permissions;
 
   if (permissions.includes("products_create")) {
     req.body.price = parseInt(req.body.price);
@@ -358,7 +356,7 @@ module.exports.edit = async (req, res) => {
 
 // [PATCH] /admin/products/edit/:id
 module.exports.editPatch = async (req, res) => {
-  const permissions = res.locals.user.permissions;
+  const permissions = res.locals.role.permissions;
 
   if (permissions.includes("products_edit")) {
     const id = req.params.id;

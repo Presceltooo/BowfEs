@@ -93,7 +93,7 @@ module.exports.index = async (req, res) => {
 
 // [PATCH] /admin/articles-category/change-status/:change-status/:id
 module.exports.changeStatus = async (req, res) => {
-  const permissions = res.locals.user.permissions;
+  const permissions = res.locals.role.permissions;
 
   if (permissions.includes("articles-category_edit")) { 
     const status = req.params.status;
@@ -121,7 +121,7 @@ module.exports.changeStatus = async (req, res) => {
 
 // [PATCH] /admin/articles-category/change-multi
 module.exports.changeMulti = async (req, res) => {
-  const permissions = res.locals.user.permissions;
+  const permissions = res.locals.role.permissions;
 
   if (permissions.includes("articles-category_edit")) {
     const type = req.body.type;
@@ -206,7 +206,7 @@ module.exports.changeMulti = async (req, res) => {
 
 // [DELETE] /admin/articles-category/delete/:id
 module.exports.deleteItem = async (req, res) => {
-  const permissions = res.locals.user.permissions;
+  const permissions = res.locals.role.permissions;
 
   if (permissions.includes("articles-category_delete")) {
     const id = req.params.id;
@@ -230,7 +230,7 @@ module.exports.deleteItem = async (req, res) => {
 
 // [PATCH] /admin/articles-category/restore/:id
 module.exports.restoreItem = async (req, res) => {
-  const permissions = res.locals.user.permissions;
+  const permissions = res.locals.role.permissions;
 
   if (permissions.includes("articles-category_delete")) {
     const id = req.params.id;
@@ -275,7 +275,7 @@ module.exports.create = async (req, res) => {
 
 // [POST] /admin/articles-category/create
 module.exports.createPost = async (req, res) => {
-  const permissions = res.locals.user.permissions;
+  const permissions = res.locals.role.permissions;
 
   if (permissions.includes("articles-category_create")) {
     if (req.body.position == NaN || req.body.position == '') {
@@ -332,7 +332,7 @@ module.exports.edit = async (req, res) => {
 
 // [PATCH] /admin/articles-category/edit/:id
 module.exports.editPatch = async (req, res) => {
-  const permissions = res.locals.user.permissions;
+  const permissions = res.locals.role.permissions;
 
   if (permissions.includes("articles-category_edit")) {
     const id = req.params.id;

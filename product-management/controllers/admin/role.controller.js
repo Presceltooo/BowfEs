@@ -40,7 +40,7 @@ module.exports.index = async (req, res) => {
 
 // [DELETE] /admin/roles/delete/:id
 module.exports.deleteItem = async (req, res) => {
-  const permissions = res.locals.user.permissions;
+  const permissions = res.locals.role.permissions;
 
   if (permissions.includes("roles_delete")) {
     const id = req.params.id;
@@ -63,7 +63,7 @@ module.exports.deleteItem = async (req, res) => {
 
 // [PATCH] /admin/roles/restore/:id
 module.exports.restoreItem = async (req, res) => {
-  const permissions = res.locals.user.permissions;
+  const permissions = res.locals.role.permissions;
 
   if (permissions.includes("roles_delete")) {
     const id = req.params.id;
@@ -93,7 +93,7 @@ module.exports.create = async (req, res) => {
 
 // [POST] /admin/roles/create
 module.exports.createPost = async (req, res) => {
-  const permissions = res.locals.user.permissions;
+  const permissions = res.locals.role.permissions;
 
   if (permissions.includes("roles_create")) {
     const record = new Role(req.body);
@@ -128,7 +128,7 @@ module.exports.edit = async (req, res) => {
 
 // [PATCH] /admin/roles/edit/:id
 module.exports.editPatch = async (req, res) => {
-  const permissions = res.locals.user.permissions;
+  const permissions = res.locals.role.permissions;
 
   if (permissions.includes("roles_edit")) {
     const id = req.params.id;
@@ -193,7 +193,7 @@ module.exports.permissions = async (req, res) => {
 
 // [PATCH] /admin/roles/permissions
 module.exports.permissionsPatch = async (req, res) => {
-  const subPermissions = res.locals.user.permissions;
+  const subPermissions = res.locals.role.permissions;
 
   if (subPermissions.includes("roles_permissions")) {
     const permissions = JSON.parse(req.body.permissions);

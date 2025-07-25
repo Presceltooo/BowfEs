@@ -53,7 +53,7 @@ module.exports.create = async (req, res) => {
 
 // [POST] /admin/accounts/createPost
 module.exports.createPost = async (req, res) => {
-  const permissions = res.locals.user.permissions;
+  const permissions = res.locals.role.permissions;
 
   if (permissions.includes("accounts_create")) {
     const emailExist = await Account.findOne({
@@ -113,7 +113,7 @@ module.exports.edit = async (req, res) => {
 
 // [PATCH] /admin/accounts/edit/:id
 module.exports.editPatch = async (req, res) => {
-  const permissions = res.locals.user.permissions;
+  const permissions = res.locals.role.permissions;
 
   if (permissions.includes("accounts_edit")) {
     const id = req.params.id;
