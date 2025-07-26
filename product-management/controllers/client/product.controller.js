@@ -1,7 +1,7 @@
 const Product = require("../../models/product.model");
 const ProductCategory = require("../../models/product-category.model");
 
-const productHelper = require("../../helpers/product");
+const productHelper = require("../../helpers/products");
 const productCategoryHelper = require("../../helpers/products-category");
 
 // [GET] /products
@@ -9,10 +9,10 @@ module.exports.index = async (req, res) => {
   const products = await Product.find({
     status: "active",
     deleted: false
-  }).sort({ position: "desc"});
+  }).sort({ position: "desc" });
 
   // map() sẽ tạo ra 1 mảng mới từ mảng cũ và có tướng tác với từng phần tử trong mảng cũ
-  const newProducts = productHelper.priceNewProduct(products);
+  const newProducts = productHelper.priceNewProducts(products);
 
   res.render("client/pages/products/index", {
     pageTitle: "Trang danh sách sản phẩm",
@@ -20,22 +20,34 @@ module.exports.index = async (req, res) => {
   });
 };
 
-// [GET] /products/:slug
+// [GET] /products/:slugProduct 
 module.exports.detail = async (req, res) => {
   try {
     const find = {
       deleted: false,
-      slug: req.params.slug,
+      slug: req.params.slugProduct,
       status: "active"
     }
 
     const product = await Product.findOne(find);
 
+    if (product.product_category_id) {
+      const category = await ProductCategory.findOne({
+        _id: product.product_category_id,
+        status: "active",
+        deleted: false
+      });
+
+      product.category = category;
+    }
+
+    product.newPrice = productHelper.priceNewProduct(product);
+
     res.render("client/pages/products/detail", {
       pageTitle: product.title,
       product: product
     });
-  } catch (error) { 
+  } catch (error) {
     res.redirect(`/products`);
   }
 
@@ -55,10 +67,10 @@ module.exports.category = async (req, res) => {
     const listSubCategoryId = listSubCategory.map(item => item.id);
 
     const products = await Product.find({
-      product_category_id: { $in:  [category.id, ...listSubCategoryId]},
+      product_category_id: { $in: [category.id, ...listSubCategoryId] },
     }).sort({ sort: "desc" });
 
-    const newProducts = productHelper.priceNewProduct(products);
+    const newProducts = productHelper.priceNewProducts(products);
 
     res.render("client/pages/products/index", {
       pageTitle: category.title,
