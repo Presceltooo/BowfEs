@@ -9,6 +9,8 @@ const controller = require("../../controllers/client/product.controller");
 // "/" vì trang products giờ sẽ là trang chủ của các trang nhỏ hơn trong products
 router.get('/', controller.index);
 
-router.get('/:slug', controller.detail);
+router.get('/:slugCategory', controller.category);
+
+// router.get('/:slug', controller.detail);
 
 module.exports = router;
