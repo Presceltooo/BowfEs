@@ -41,6 +41,75 @@ module.exports.index = async (req, res) => {
   });
 }
 
+// [PATCH] /admin/accounts/change-status/:change-status/:id
+module.exports.changeStatus = async (req, res) => {
+  const permissions = res.locals.role.permissions;
+
+  if (permissions.includes("accounts_edit")) {
+    const status = req.params.status;
+    const id = req.params.id;
+    
+    await Account.updateOne({
+      _id: id
+    }, {
+      status: status
+    });
+    req.flash('success', 'Cập nhật trạng thái tài khoản thành công!');
+
+    res.redirect('back');
+  } else {
+    res.send("403");
+    return;
+  }
+}
+
+
+// [DELETE] /admin/accounts/delete/:id
+module.exports.deleteItem = async (req, res) => {
+  const permissions = res.locals.role.permissions;
+
+  if (permissions.includes("accounts_delete")) {
+    const id = req.params.id;
+
+    // await Role.deleteOne({_id: id});
+    await Account.updateOne({
+      _id: id
+    }, {
+      deleted: true,
+      deletedAt: Date.now()
+    });
+    req.flash('success', `Xóa thành công tài khoản!`);
+
+    res.redirect('back');
+  } else {
+    res.send("403");
+    return;
+  }
+}
+
+// [PATCH] /admin/accounts/restore/:id
+module.exports.restoreItem = async (req, res) => {
+  const permissions = res.locals.role.permissions;
+
+  if (permissions.includes("accounts_delete")) {
+    const id = req.params.id;
+
+    // await Product.deleteOne({_id: id});
+    await Account.updateOne({
+      _id: id
+    }, {
+      deleted: false,
+      deletedAt: null
+    });
+    req.flash('success', `Khôi phục thành công tài khoản!`);
+
+    res.redirect('back');
+  } else {
+    res.send("403");
+    return;
+  }
+}
+
 // [GET] /admin/accounts/create
 module.exports.create = async (req, res) => {
   const roles = await Role.find({ deleted: false });
@@ -145,4 +214,42 @@ module.exports.editPatch = async (req, res) => {
     res.send("403");
     return;
   }
+}
+
+// [GET] /admin/accounts/detail/:id
+module.exports.detail = async (req, res) => {
+  try {
+    const findone = {
+      deleted: false,
+      _id: req.params.id
+    }
+
+    const data = await Account.findOne(findone).select("-password -token");
+
+    const role = await Role.findOne({
+      $and: [{
+          _id: data.role_id
+        },
+        {
+          $or: [{
+            deleted: false
+          }, {
+            deletedAt: {
+              $ne: null
+            }
+          }]
+        }
+      ]
+    });
+
+    data.role = role;
+
+    res.render("admin/pages/accounts/detail", {
+      pageTitle: data.fullName,
+      data: data
+    });
+  } catch (error) {
+    res.redirect(`${SystemConfig.preFixAdmin}/accounts`);
+  }
+
 }
