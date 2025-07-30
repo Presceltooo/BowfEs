@@ -20,7 +20,7 @@ module.exports.index = async (req, res) => {
   });
 };
 
-// [GET] /products/:slugProduct 
+// [GET] /products/detail/:slugProduct
 module.exports.detail = async (req, res) => {
   try {
     const find = {
@@ -38,7 +38,7 @@ module.exports.detail = async (req, res) => {
         deleted: false
       });
 
-      product.category = category;
+      product.category = category.title;
     }
 
     product.newPrice = productHelper.priceNewProduct(product);
