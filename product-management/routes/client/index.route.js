@@ -1,8 +1,9 @@
 const categoryMiddleware = require("../../middlewares/client/category.middleware");
 
-const productRoutes = require("./product.route");
 const homeRoutes = require("./home.route");
+const productRoutes = require("./product.route");
 const articleRoutes = require("./article.route");
+const searchRoutes = require("./search.route");
 
 module.exports = (app) => {
   app.use(categoryMiddleware.categoryProducts);
@@ -15,4 +16,6 @@ module.exports = (app) => {
   // use vì có get ở trong product.route.js, và productRoutes là đang dùng thẳng hàm => tiện
 
   app.use('/articles', articleRoutes);
+
+  app.use('/search', searchRoutes);
 }
