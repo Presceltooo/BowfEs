@@ -1,14 +1,17 @@
 const categoryMiddleware = require("../../middlewares/client/category.middleware");
+const cartMiddleware = require("../../middlewares/client/cart.middleware");
 
 const homeRoutes = require("./home.route");
 const productRoutes = require("./product.route");
 const articleRoutes = require("./article.route");
 const searchRoutes = require("./search.route");
+const cartRoutes = require("./cart.route");
 
 module.exports = (app) => {
   app.use(categoryMiddleware.categoryProducts);
   app.use(categoryMiddleware.categoryArticles);
   // Middleware luôn sẵn để lấy dữ liệu category
+  app.use(cartMiddleware.cartId);
 
   app.use('/', homeRoutes);
 
@@ -18,4 +21,6 @@ module.exports = (app) => {
   app.use('/articles', articleRoutes);
 
   app.use('/search', searchRoutes);
+
+  app.use('/cart', cartRoutes);
 }
