@@ -40,3 +40,5 @@ header.header
               - const pathArticle = "/articles";
               a(href="/articles") Blog
                 +sub-menu(layoutArticlesCategory, pathArticle) 
+            li 
+              a(href="/cart") Giỏ hàng (#{miniCart ? miniCart.totalQuantity : "0"})
