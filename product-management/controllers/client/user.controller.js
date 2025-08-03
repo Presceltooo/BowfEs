@@ -4,6 +4,8 @@ const User = require("../../models/user.model");
 const ForgotPassword = require("../../models/forgot-password.model");
 
 const generateHelper = require("../../helpers/generate");
+const sendMailHelper = require("../../helpers/sendMail");
+
 
 // [GET] /user/register
 module.exports.register = async (req, res) => {
@@ -114,13 +116,21 @@ module.exports.forgotPasswordPost = async (req, res) => {
     expireAt: Date.now()
   };
 
-  objectForgotPassword.otp = generateHelper.generateRandomNumber(6);
+  objectForgotPassword.otp = otp;
+
+  console.log(otp);
 
   const forgotPassword = new ForgotPassword(objectForgotPassword);
   await forgotPassword.save();
 
 
   // Việc 2: Gửi mã OTP qua email cho user
+  const subject = "Mã OTP đặt lại mật khẩu";
+  const html = `
+  <p>Mã OTP của bạn là: <strong>${otp}</strong>. Thời hạn sử dụng mã OTP là 3 phút. Lưu ý không chia sẻ mã này với bất kỳ ai.</p>
+  `;
+
+  sendMailHelper.sendMail(email, subject, html);
 
   res.redirect(`/user/password/otp?email=${email}`);
 };
@@ -155,7 +165,44 @@ module.exports.otpPasswordPost = async (req, res) => {
     email: email,
   });
 
-  res.cookie("tokenUser", user.tokenUser);
+  res.cookie("tokenUserOTP", user.tokenUser);
+  // Tránh bug Login
 
   res.redirect("/user/password/reset");
+}
+
+// [GET] /user/password/reset
+module.exports.resetPassword = async (req, res) => {
+  const email = req.query.email;
+
+  res.render("client/pages/user/reset-password", {
+    pageTitle: "Đặt lại mật khẩu",
+    email: email
+  });
+}
+
+// [GET] /user/password/reset
+module.exports.resetPasswordPost = async (req, res) => {
+  const password = md5(req.body.password);
+  const tokenUserOTP = req.cookies.tokenUserOTP;
+
+  const user = await User.findOne({
+    tokenUser: tokenUserOTP
+  });
+
+  if (password != user.password) {
+    await User.updateOne({
+      tokenUser: tokenUserOTP
+    }, {
+      password: password
+    });
+
+    req.flash("success", "Đặt lại mật khẩu thành công!");
+    res.cookie("tokenUser", tokenUserOTP);
+    res.redirect("/");
+  } else {
+    // Nếu mật khẩu mới trùng với mật khẩu cũ
+    req.flash("error", "Mật khẩu mới không được trùng với mật khẩu cũ!");
+    res.redirect("back");
+  }
 }
