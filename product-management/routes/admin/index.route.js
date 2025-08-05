@@ -11,6 +11,7 @@ const authRoutes = require("./auth.route")
 const articleCategoryRoutes = require("./article-category.route")
 const myAccountRoutes = require("./my-account.route")
 const articleRoutes = require("./article.route");
+const orderRoutes = require("./order.route");
 
 
 module.exports = (app) => {
@@ -33,4 +34,6 @@ module.exports = (app) => {
   app.use(PATCH_ADMIN + '/my-account', authMiddleware.requireAuth, myAccountRoutes);
 
   app.use(PATCH_ADMIN + '/articles', authMiddleware.requireAuth, articleRoutes);
+
+  app.use(PATCH_ADMIN + '/orders', authMiddleware.requireAuth, orderRoutes);
 }
