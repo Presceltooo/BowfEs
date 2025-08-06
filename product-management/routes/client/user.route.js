@@ -5,6 +5,8 @@ const controller = require("../../controllers/client/user.controller");
 
 const validate = require("../../validates/client/user.validate");
 
+const authMiddleware = require("../../middlewares/client/auth.middleware");
+
 router.get('/register', controller.register);
 
 router.post('/register', validate.registerPost, controller.registerPost);
@@ -26,5 +28,7 @@ router.post('/password/otp', validate.otpPasswordPost, controller.otpPasswordPos
 router.get('/password/reset', controller.resetPassword);
 
 router.post('/password/reset', validate.resetPasswordPost, controller.resetPasswordPost);
+
+router.get('/info', authMiddleware.requireAuth, controller.info);
 
 module.exports = router;

@@ -206,3 +206,21 @@ module.exports.resetPasswordPost = async (req, res) => {
     res.redirect("back");
   }
 }
+
+// [GET] /user/info
+module.exports.info = async (req, res) => {
+  const user = await User.findOne({
+    tokenUser: req.cookies.tokenUser
+  });
+
+  if (!user) {
+    req.flash("error", "Bạn cần đăng nhập để truy cập trang này!");
+    res.redirect("/user/login");
+    return;
+  }
+
+  res.render("client/pages/user/info", {
+    pageTitle: "Thông tin tài khoản",
+    user: user
+  });
+}
