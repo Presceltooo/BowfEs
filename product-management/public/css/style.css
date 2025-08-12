@@ -52,11 +52,14 @@
   border: 1px solid #ddd;
   border-radius: 8px;
   overflow: hidden;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
 }
 
 .product-item .inner-image {
   width: 100%;
-  aspect-ratio: 4/3;
+  height: 200px;
   border-bottom: 1px solid #ddd;
   position: relative;
 }
