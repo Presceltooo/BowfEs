@@ -9,37 +9,40 @@ block main
 
     .row 
       .col-12 
-        //- .inner-head 
-        //-   .inner-avartar EY
-        //-   .inner-name Em Yeu 
-        .inner-body 
-          .inner-incoming 
-            .inner-name Em Yeu
-            .inner-content
-              | A ơi, sang nhà em nha, nhà e không có ai ở nhà cả
-          .inner-outgoing
-            .inner-content  
-              | Thế à, Okay em miu 
-          .inner-outgoing 
-            .inner-name Em Yeu
-            .inner-content
-              | Nhanh nha Nhanh nha
-          .inner-outgoing
-            .inner-content
-              | Anh đến rồi mà thấy ai ở nhà đâu em? Khóa của mà :)
-          .inner-outgoing
-            .inner-name Em Yeu
-            .inner-content
-              | Thì em bảo nhà em không có ai ở nhà mà :)
-        .inner-foot
-          form(
-            class="inner-form"
-            action=""
-          )
-            input(
-              type="text"
-              placeholder="Type your message..."
-              name="content"
+        .chat
+          //- .inner-head 
+          //-   .inner-avatar EY
+          //-   .inner-name Em Yeu 
+          .inner-body 
+            each chat in chats 
+              div(class=(chat.infoUser.id == user.id ? "inner-outgoing" : "inner-incoming"))
+                if (chat.infoUser.id != user.id)
+                  .inner-name #{chat.infoUser.fullName}
+                .inner-content
+                  | #{chat.content}
+            //- .inner-outgoing
+            //-   .inner-content  
+            //-     | Thế à, Okay em miu 
+            //- .inner-incoming 
+            //-   .inner-name Em Yeu
+            //-   .inner-content
+            //-     | Nhanh nha Nhanh nha
+            //- .inner-outgoing
+            //-   .inner-content
+            //-     | Anh đến rồi mà thấy ai ở nhà đâu em? Khóa của mà :)
+            //- .inner-incoming
+            //-   .inner-name Em Yeu
+            //-   .inner-content
+            //-     | Thì em bảo nhà em không có ai ở nhà mà :)
+          .inner-foot
+            form(
+              class="inner-form"
+              action=""
             )
-            button 
-              i.fa-solid.fa-paper-plane
+              input(
+                type="text"
+                placeholder="Type your message..."
+                name="content"
+              )
+              button 
+                i.fa-solid.fa-paper-plane
