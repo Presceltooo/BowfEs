@@ -4,6 +4,7 @@ const User = require("../../models/user.model");
 // [GET] /chat
 module.exports.index = async (req, res) => {
   const userId = res.locals.user.id;
+  const fullName = res.locals.user.fullName;
 
   // Socket.IO
   // Dùng once để chỉ kết 1 lần, tránh knoi đi lại sau mỗi lần F5
@@ -17,6 +18,12 @@ module.exports.index = async (req, res) => {
 
       await chat.save();
 
+      // Trả data về cho Client
+      _io.emit("SERVER_RETURN_MESSAGE", {
+        userId: userId,
+        fullName: fullName,
+        content: content
+      });
     });
   });
   // End Socket.IO
