@@ -14,9 +14,12 @@ const articleRoutes = require("./article.route");
 const orderRoutes = require("./order.route");
 const settingRoutes = require("./setting.route");
 
+const authController = require("../../controllers/admin/auth.controller");
 
 module.exports = (app) => {
   const PATCH_ADMIN = systemConfig.preFixAdmin;
+
+  app.get(PATCH_ADMIN, authController.login);
 
   app.use(PATCH_ADMIN + '/dashboard', authMiddleware.requireAuth, dashboardRoutes);
 
